@@ -1,0 +1,5 @@
+Tad User Member Generation Module 1.0 (Released on 2020-08-12)
+=============================================================
+1.Online Batch Generation of Member Accounts
+2. Member management function
+3. Batch import account function
