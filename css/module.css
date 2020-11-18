@@ -10,6 +10,10 @@
     vertical-align: middle !important;
 }
 
+.n {
+    white-space: nowrap;
+}
+
 h1.my,
 h2.my,
 h1>span.my,

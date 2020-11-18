@@ -75,3 +75,8 @@ define("_MA_TADUSERS_ONLY_LIST", "Just for show.");
 define("_MA_TADUSERS_GROUP_USERS", "Users of the group");
 define("_MA_TADUSERS_SEARCH_USER", "Search User");
 define("_MA_TADUSERS_SEARCH", "Search for");
+define("_MA_TADUSERS_ICQ", "The 'Identity' used to store the OpenID");
+define("_MA_TADUSERS_OCC", "The 'Title' used to store the OpenID");
+define("_MA_TADUSERS_INTREST", "The 'School Code' used to store the OpenID");
+define("_MA_TADUSERS_BIO", "The 'Characters' used to store the OpenID");
+define("_MA_TADUSERS_EDIT", "Change Password or Group");

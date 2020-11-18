@@ -1,6 +1,7 @@
 <?php
 
 use Xmf\Request;
+use XoopsModules\Tadtools\Bootstrap3Editable;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = "tad_users_admin.tpl";
@@ -12,6 +13,10 @@ include_once "../function.php";
 function list_users($groupid = "", $key = "")
 {
     global $xoopsDB, $xoopsTpl;
+
+    $Bootstrap3Editable = new Bootstrap3Editable();
+    $Bootstrap3EditableCode = $Bootstrap3Editable->render('.editable', XOOPS_URL . '/modules/tad_users/admin/ajax.php');
+    $xoopsTpl->assign('Bootstrap3EditableCode', $Bootstrap3EditableCode);
 
     $and_key = empty($key) ? '' : "and (a.name like '%$key%' or a.uname like '%$key%' or a.email like '%$key%' or a.user_occ like '%$key%' or a.bio like '%$key%' or a.user_intrest like '%$key%')";
     if (empty($groupid)) {

@@ -75,3 +75,8 @@ define("_MA_TADUSERS_ONLY_LIST", "僅秀出");
 define("_MA_TADUSERS_GROUP_USERS", "群組的使用者");
 define("_MA_TADUSERS_SEARCH_USER", "搜尋使用者");
 define("_MA_TADUSERS_SEARCH", "搜尋");
+define("_MA_TADUSERS_ICQ", "通常用來儲存 OpenID 的「身份別」");
+define("_MA_TADUSERS_OCC", "通常用來儲存 OpenID 的「職稱」");
+define("_MA_TADUSERS_INTREST", "通常用來儲存 OpenID 的「學校代碼」");
+define("_MA_TADUSERS_BIO", "通常用來儲存 OpenID 的各種「角色」");
+define("_MA_TADUSERS_EDIT", "修改密碼或群組");
