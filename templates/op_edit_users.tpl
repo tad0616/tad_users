@@ -20,7 +20,13 @@
             <td class="c"><a href="<{$xoops_url}>/userinfo.php?uid=<{$uid}>"><{$name}></a></td>
             <td class="c"><a href="<{$xoops_url}>/userinfo.php?uid=<{$uid}>"><{$uname}></a></td>
             <td class="c"><{$email}></td>
-            <td class="c"><input type="text" name="pass" id="pass" class="form-control " title="要改<{$smarty.const._MA_TADUSERS_PASSWD}>才需填寫" data-toggle="tooltip"></td>
+            <td class="c">
+                <{if $user_intrest or $uname|strpos:"_line" or $uname|strpos:"_fb" or $uname|strpos:"_goo" or $uname|strpos:"_ya"}>
+                    <a href="<{$xoops_url}>/modules/tad_login/admin/ps_tool.php?keyword=<{$uname}>" target="_blank"><{$smarty.const._MA_TADUSERS_MODIFY_OPENID_PASSWD}></a>
+                <{else}>
+                    <input type="text" name="pass" id="pass" class="form-control " title="<{$smarty.const._MA_TADUSERS_PASSWD_TIP}>" data-toggle="tooltip">
+                <{/if}>
+            </td>
             <td class="c"><{$XoopsFormSelectGroup}></td>
             <td class="c"><input type="text" name="bio" id="bio" class="form-control " value="<{$bio}>"></td>
             <td class="c">
