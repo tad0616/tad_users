@@ -67,9 +67,7 @@ function edit_users($uid = "")
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $users = $xoopsDB->fetchArray($result);
-    foreach ($users as $k => $v) {
-        $xoopsTpl->assign($k, $v);
-    }
+    $xoopsTpl->assign('user', $users);
 
     require XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
     $form = new \XoopsFormSelectGroup("", "group", false, $userGroups, 3, true);
