@@ -87,15 +87,10 @@ function update_user($uid = "")
         $pass = md5($_POST['pass']);
         $and_pass = ",pass='{$pass}'";
     }
-
-    $name = $myts->addSlashes($_POST['name']);
-    $email = $myts->addSlashes($_POST['email']);
-    $timezone_offset = $myts->addSlashes($_POST['timezone_offset']);
     $user_occ = $myts->addSlashes($_POST['user_occ']);
-    $user_intrest = $myts->addSlashes($_POST['user_intrest']);
     $bio = $myts->addSlashes($_POST['bio']);
 
-    $sql = "update " . $xoopsDB->prefix("users") . " set `name`='{$name}'{$and_pass}, `email`='{$email}', `timezone_offset`='{$timezone_offset}' , `user_occ`='{$user_occ}', `user_intrest`='{$user_intrest}', `bio`='{$bio}' where `uid`='$uid'";
+    $sql = "update " . $xoopsDB->prefix("users") . " set `user_occ`='{$user_occ}', `bio`='{$bio}'{$and_pass} where `uid`='$uid'";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //更新群組
