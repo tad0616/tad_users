@@ -82,3 +82,5 @@ define("_MA_TADUSERS_INTREST", "The 'School Code' used to store the OpenID");
 define("_MA_TADUSERS_BIO", "The 'Characters' used to store the OpenID");
 define("_MA_TADUSERS_EDIT", "Change Password or Group");
 define("_MA_TADUSERS_MODIFY_OPENID_PASSWD", "OpenID account can be changed at tad_login.");
+
+define("_MA_TADUSERS_THEME", "Theme");

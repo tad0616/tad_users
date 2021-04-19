@@ -2,7 +2,9 @@
 
 use Xmf\Request;
 use XoopsModules\Tadtools\Bootstrap3Editable;
+use XoopsModules\Tadtools\FooTable;
 use XoopsModules\Tadtools\Utility;
+
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = "tad_users_admin.tpl";
 include_once "header.php";
@@ -50,6 +52,8 @@ function list_users($groupid = "", $key = "")
         $users[] = $user;
     }
     $xoopsTpl->assign('users', $users);
+    $FooTable = new FooTable('.footable');
+    $FooTable->render();
 
 }
 
@@ -128,5 +132,4 @@ switch ($op) {
 $xoopsTpl->assign("now_op", $op);
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_users/css/module.css');
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/font-awesome/css/font-awesome.css');
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/vtable.css');
 include_once 'footer.php';

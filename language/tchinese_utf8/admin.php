@@ -82,3 +82,5 @@ define("_MA_TADUSERS_INTREST", "通常用來儲存 OpenID 的「學校代碼」"
 define("_MA_TADUSERS_BIO", "通常用來儲存 OpenID 的各種「角色」");
 define("_MA_TADUSERS_EDIT", "修改密碼或群組");
 define("_MA_TADUSERS_MODIFY_OPENID_PASSWD", "OpenID 帳號請至 tad_login 修改");
+
+define("_MA_TADUSERS_THEME", "使用佈景");
