@@ -1,8 +1,14 @@
-tad_blocks 1.7 (released 2020-12-16)
-=================================================
-1. Fix the problem that the "Edit" button does not work in some cases.
-2. Fix the problem that the title of a block becomes blank after clicking on the title of the block.
-3. Fix the problem that when editing member groups or passwords, sometimes they are directed to other pages.
+Tad User Member Generation Module 1.3 (Released 2021-08-05)
+===========================================
+1. Add the function to modify the user's layout
+2. Cancel frontend
+
+Tad User Member Generation Module 1.2 (Released 2020-12-16)
+===========================================
+1. Modify OpenID password will automatically lead to tad login to modify
+2. Fix the problem that name, Email and other information will disappear after editing member group or password.
+3. Fix the problem that when editing member group or password, sometimes it will be directed to other pages.
+
 
 Tad User Member Generation Module 1.1 (Released on 2020-09-09)
 =============================================================

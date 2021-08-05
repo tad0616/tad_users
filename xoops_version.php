@@ -4,7 +4,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADUSERS_NAME;
-$modversion['version'] = 1.2;
+$modversion['version'] = 1.3;
 $modversion['description'] = _MI_TADUSERS_DESC;
 $modversion['author'] = _MI_TADUSERS_AUTHOR;
 $modversion['credits'] = _MI_TADUSERS_CREDITS;
@@ -15,7 +15,7 @@ $modversion['image'] = "images/logo.png";
 $modversion['dirname'] = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date'] = '2020/12/16';
+$modversion['release_date'] = '2021/08/05';
 $modversion['module_website_url'] = 'https://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status'] = 'release';
@@ -32,7 +32,7 @@ $modversion['paypal']['amount'] = 0;
 $modversion['paypal']['currency_code'] = 'USD';
 
 //---啟動後台管理界面選單---//
-$modversion['system_menu'] = 1;
+$modversion['system_menu'] = 0;
 
 //---管理介面設定---//
 $modversion['hasAdmin'] = 1;
