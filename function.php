@@ -8,7 +8,7 @@ function group_select($select_name = "groupid", $value = array(), $js = "")
     $sql = "select groupid, name, group_type from " . $xoopsDB->prefix("groups");
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $option = "";
+    $option = "<option value=''></option>";
     while (list($groupid, $name, $group_type) = $xoopsDB->fetchRow($result)) {
         $selected = (in_array($groupid, $value)) ? "selected" : "";
         if ($group_type == 'Anonymous') {

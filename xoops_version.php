@@ -4,7 +4,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADUSERS_NAME;
-$modversion['version'] = 1.3;
+$modversion['version'] = 1.4;
 $modversion['description'] = _MI_TADUSERS_DESC;
 $modversion['author'] = _MI_TADUSERS_AUTHOR;
 $modversion['credits'] = _MI_TADUSERS_CREDITS;
@@ -15,7 +15,7 @@ $modversion['image'] = "images/logo.png";
 $modversion['dirname'] = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date'] = '2021/08/05';
+$modversion['release_date'] = '2021/09/29';
 $modversion['module_website_url'] = 'https://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status'] = 'release';

@@ -1,3 +1,8 @@
+Tad User Member Generation Module 1.4 (Released 2021-09-29)
+===========================================
+1. Fix the problem that users may repeatedly appear
+2. Add a blank item in the drop-down menu of group selection
+
 Tad User Member Generation Module 1.3 (Released 2021-08-05)
 ===========================================
 1. Add the function to modify the user's layout

@@ -22,9 +22,9 @@ function list_users($groupid = "", $key = "")
 
     $and_key = empty($key) ? '' : "and (a.name like '%$key%' or a.uname like '%$key%' or a.email like '%$key%' or a.user_occ like '%$key%' or a.bio like '%$key%' or a.user_intrest like '%$key%')";
     if (empty($groupid)) {
-        $sql = "select a.* from " . $xoopsDB->prefix("users") . " as a where 1 $and_key";
+        $sql = "select a.* from " . $xoopsDB->prefix("users") . " as a where 1 $and_key group by uid";
     } else {
-        $sql = "select a.* from " . $xoopsDB->prefix("users") . " as a join " . $xoopsDB->prefix("groups_users_link") . " as b on a.uid=b.uid where b.groupid='$groupid' $and_key";
+        $sql = "select a.* from " . $xoopsDB->prefix("users") . " as a join " . $xoopsDB->prefix("groups_users_link") . " as b on a.uid=b.uid where b.groupid='$groupid' $and_key group by uid";
     }
 
     //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
