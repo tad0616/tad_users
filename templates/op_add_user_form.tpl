@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-sm-6">
 
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <label class="col-sm-4 control-label col-form-label text-md-right">
                 <{$smarty.const._MA_TADUSERS_IDNUM}>
             </label>
@@ -14,7 +14,7 @@
 
         </div>
 
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <label class="col-sm-4 control-label col-form-label text-md-right">
                 <{$smarty.const._MA_TADUSERS_IDSTR}>
             </label>
@@ -24,7 +24,7 @@
 
         </div>
 
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <label class="col-sm-4 control-label col-form-label text-md-right">
                 <{$smarty.const._MA_TADUSERS_IDSTART}>
             </label>
@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <label class="col-sm-4 control-label col-form-label text-md-right">
                 <{$smarty.const._MA_TADUSERS_OFGROUP}>
             </label>
@@ -44,7 +44,7 @@
         </div>
     </div>
     <div class="col-sm-6">
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <label class="col-sm-4 control-label col-form-label text-md-right">
                 <{$smarty.const._MA_TADUSERS_PASS_MODE}>
             </label>
