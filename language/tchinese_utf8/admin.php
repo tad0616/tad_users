@@ -84,3 +84,16 @@ define("_MA_TADUSERS_EDIT", "修改密碼或群組");
 define("_MA_TADUSERS_MODIFY_OPENID_PASSWD", "OpenID 帳號請至 tad_login 修改");
 
 define("_MA_TADUSERS_THEME", "使用佈景");
+
+define("_MA_TADUSERS_CHECKMARK_MEMBER", "將勾選的會員");
+define("_MA_TADUSERS_GROUP_ACTIONS", "執行群組動作");
+define("_MA_TADUSERS_JOIN_TO_GROUP", "加入右側指定群組");
+define("_MA_TADUSERS_MOVE_OUT_GROUP", "移出右側指定群組");
+define("_MA_TADUSERS_GROUPS", "群組");
+define("_MA_TADUSERS_OR_UPDATE", "或更新");
+define("_MA_TADUSERS_SELECT_FIELD", "選擇欄位");
+define("_MA_TADUSERS_UPDATE_TIMEZONE", "更新「時區」為");
+define("_MA_TADUSERS_UPDATE_THEME", "更新「佈景」為");
+define("_MA_TADUSERS_VALUE", "的值為");
+define("_MA_TADUSERS_GO", "執行");
+define("_MA_TADUSERS_SELECT_ACTION", "請選擇動作");

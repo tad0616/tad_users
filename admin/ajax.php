@@ -8,15 +8,16 @@ $op = Request::getString('op');
 $name = Request::getString('name');
 $value = Request::getString('value');
 $pk = Request::getInt('pk');
+$uid = Request::getInt('uid');
 
 switch ($op) {
     case "update_value":
-        echo update_value($name, $value, $pk);
+        echo update_value($name, $value, $uid);
         break;
 
 }
 
-include_once 'footer.php';
+// include_once 'footer.php';
 
 function update_value($name, $value, $uid)
 {

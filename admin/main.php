@@ -12,7 +12,7 @@ include_once "../function.php";
 
 /*-----------function區--------------*/
 
-function list_users($groupid = "", $key = "")
+function list_users($groupid = "", $key = "", $sort = 'uid', $desc = 'desc')
 {
     global $xoopsDB, $xoopsTpl;
 
@@ -20,11 +20,17 @@ function list_users($groupid = "", $key = "")
     $Bootstrap3EditableCode = $Bootstrap3Editable->render('.editable', XOOPS_URL . '/modules/tad_users/admin/ajax.php');
     $xoopsTpl->assign('Bootstrap3EditableCode', $Bootstrap3EditableCode);
 
+    $xoopsTpl->assign('groupid', $groupid);
+    $xoopsTpl->assign('key', $key);
+    $desc = $desc == 'desc' ? '' : 'desc';
+    $xoopsTpl->assign('desc', $desc);
+    $xoopsTpl->assign('sort', $sort);
+
     $and_key = empty($key) ? '' : "and (a.name like '%$key%' or a.uname like '%$key%' or a.email like '%$key%' or a.user_occ like '%$key%' or a.bio like '%$key%' or a.user_intrest like '%$key%')";
     if (empty($groupid)) {
-        $sql = "select a.* from " . $xoopsDB->prefix("users") . " as a where 1 $and_key group by uid";
+        $sql = "select a.* from " . $xoopsDB->prefix("users") . " as a where 1 $and_key order by `$sort` $desc";
     } else {
-        $sql = "select a.* from " . $xoopsDB->prefix("users") . " as a join " . $xoopsDB->prefix("groups_users_link") . " as b on a.uid=b.uid where b.groupid='$groupid' $and_key group by uid";
+        $sql = "select a.* from " . $xoopsDB->prefix("users") . " as a join " . $xoopsDB->prefix("groups_users_link") . " as b on a.uid=b.uid where b.groupid='$groupid' $and_key group by a.`uid` order by a.`$sort` $desc";
     }
 
     //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
@@ -41,14 +47,17 @@ function list_users($groupid = "", $key = "")
     $select = group_select("groupid", array($groupid), "onChange=\"location.href='main.php?groupid='+this.value\"");
     $xoopsTpl->assign('select', $select);
 
+    $group_select = group_select("groupid");
+    $xoopsTpl->assign('group_select', $group_select);
+
     $users = [];
     while ($user = $xoopsDB->fetchArray($result)) {
         foreach ($user as $k => $v) {
             $$k = $v;
         }
 
-        $user['user_regdate'] = date("Y年m月d日", $user_regdate);
-        $user['last_login'] = empty($last_login) ? "" : date("Y年m月d日", $last_login);
+        $user['user_regdate'] = date("Y/m/d", $user_regdate);
+        $user['last_login'] = empty($last_login) ? "" : date("Y/m/d H:i:s", $last_login);
         $users[] = $user;
     }
     $xoopsTpl->assign('users', $users);
@@ -81,7 +90,7 @@ function edit_users($uid = "")
 
 function update_user($uid = "")
 {
-    global $xoopsDB, $xoopsTpl;
+    global $xoopsDB;
     $myts = \MyTextSanitizer::getInstance();
 
     $and_pass = "";
@@ -101,8 +110,38 @@ function update_user($uid = "")
     foreach ($_POST['group'] as $group_id) {
         $group_id = (int) $group_id;
         $sql = "insert into " . $xoopsDB->prefix("groups_users_link") . " (`groupid` , `uid`) values('$group_id','$uid')";
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    }
+}
+
+function add_group($groupid)
+{
+    global $xoopsDB;
+    foreach ($_POST['uid_arr'] as $uid) {
+        $sql = "insert into " . $xoopsDB->prefix("groups_users_link") . " (`groupid` , `uid`) values('$groupid','$uid')";
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    }
+}
+
+function del_group($groupid)
+{
+    global $xoopsDB;
+    foreach ($_POST['uid_arr'] as $uid) {
+        $sql = "delete from " . $xoopsDB->prefix("groups_users_link") . "  where `uid`='$uid' and `groupid`='$groupid'";
         $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     }
+}
+
+function update_users_value($name, $value)
+{
+    global $xoopsDB;
+
+    foreach ($_POST['uid_arr'] as $uid) {
+        $sql = "update " . $xoopsDB->prefix("users") . " set `{$name}`='{$value}' where uid='$uid'";
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    }
+    return $value;
+
 }
 
 /*-----------執行動作判斷區----------*/
@@ -111,6 +150,9 @@ $uid = Request::getInt('uid');
 $g2p = Request::getInt('g2p', 1);
 $groupid = Request::getInt('groupid');
 $key = Request::getString('key');
+$sort = Request::getString('sort', 'uid');
+$desc = Request::getString('desc');
+$val = Request::getString('val');
 
 switch ($op) {
     case "update_user":
@@ -122,8 +164,28 @@ switch ($op) {
         edit_users($uid);
         break;
 
+    case "add_group":
+        add_group($groupid);
+        header("location:main.php?groupid=$groupid");
+        break;
+
+    case "del_group":
+        del_group($groupid);
+        header("location:main.php?groupid=$groupid");
+        break;
+
+    case "update_timezone_offset":
+        update_users_value('timezone_offset', $val);
+        header("location:{$_SERVER['HTTP_REFERER']}");
+        break;
+
+    case "update_theme":
+        update_users_value('theme', $val);
+        header("location:{$_SERVER['HTTP_REFERER']}");
+        break;
+
     default:
-        list_users($groupid, $key);
+        list_users($groupid, $key, $sort, $desc);
         $op = 'list_users';
         break;
 }

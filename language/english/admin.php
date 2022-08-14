@@ -84,3 +84,16 @@ define("_MA_TADUSERS_EDIT", "Change Password or Group");
 define("_MA_TADUSERS_MODIFY_OPENID_PASSWD", "OpenID account can be changed at tad_login.");
 
 define("_MA_TADUSERS_THEME", "Theme");
+
+define("_MA_TADUSERS_CHECKMARK_MEMBER", "Members who will be checked");
+define("_MA_TADUSERS_GROUP_ACTIONS", "Perform group actions");
+define("_MA_TADUSERS_JOIN_TO_GROUP", "Join the right specified group");
+define("_MA_TADUSERS_MOVE_OUT_GROUP", "Move out of the right specified group");
+define("_MA_TADUSERS_GROUPS", "Group");
+define("_MA_TADUSERS_OR_UPDATE", "or update");
+define("_MA_TADUSERS_SELECT_FIELD", "Select Field");
+define("_MA_TADUSERS_UPDATE_TIMEZONE", "Update \"Time Zone\" to");
+define("_MA_TADUSERS_UPDATE_THEME", "Update \"Theme\" to");
+define("_MA_TADUSERS_VALUE", "The value of ");
+define("_MA_TADUSERS_GO", "Execute");
+define("_MA_TADUSERS_SELECT_ACTION", "Please select action");
