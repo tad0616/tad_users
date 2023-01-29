@@ -1,3 +1,8 @@
+Tad User 1.7 (released on 2023-01-29)
+===========================================
+1. Fix the problem that "Join specified group" and "Remove specified group" cannot be used in batch
+2. Add the function of deleting members
+
 Tad User 1.6 (released on 2022-08-13)
 ===========================================
 1. Add hours, minutes and seconds to last login time

@@ -64,6 +64,12 @@ function list_users($groupid = "", $key = "", $sort = 'uid', $desc = 'desc')
     $FooTable = new FooTable('.footable');
     $FooTable->render();
 
+    //加入Token安全機制
+    include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
+    $token = new \XoopsFormHiddenToken();
+    $token_form = $token->render();
+    $xoopsTpl->assign("token_form", $token_form);
+
 }
 
 function edit_users($uid = "")
@@ -144,8 +150,44 @@ function update_users_value($name, $value)
 
 }
 
+//
+function del_users()
+{
+    $member_handler = xoops_getHandler('member');
+    if (!$GLOBALS['xoopsSecurity']->check()) {
+        redirect_header('main.php', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
+    }
+
+    if (@isset($_POST['uid_arr']) || @$_POST['uid_arr'] !== '') {
+        $error = '';
+        foreach ($_POST['uid_arr'] as $uid) {
+            $uid = (int) $uid;
+            $user = $member_handler->getUser($uid);
+            $groups = $user->getGroups();
+            if (in_array(XOOPS_GROUP_ADMIN, $groups)) {
+                $error .= sprintf(_MA_TADUSERS_NO_ADMINSUPP, $user->getVar('uname'));
+            } elseif (!$member_handler->deleteUser($user)) {
+                $error .= sprintf(_MA_TADUSERS_NO_SUPP, $user->getVar('uname'));
+            } else {
+                /* @var XoopsOnlineHandler $online_handler */
+                $online_handler = xoops_getHandler('online');
+                $online_handler->destroy($uid);
+                // RMV-NOTIFY
+                xoops_notification_deletebyuser($uid);
+            }
+        }
+        if ($error !== '') {
+            redirect_header('main.php', 3, sprintf(_MA_TADUSERS_USERS_ERROR, $error));
+        } else {
+            redirect_header('main.php', 1, _MA_TADUSERS_DBUPDATED);
+        }
+    }
+}
+
 /*-----------執行動作判斷區----------*/
 $op = Request::getString('op');
+$op1 = Request::getString('op1');
+$op2 = Request::getString('op2');
 $uid = Request::getInt('uid');
 $g2p = Request::getInt('g2p', 1);
 $groupid = Request::getInt('groupid');
@@ -153,6 +195,12 @@ $key = Request::getString('key');
 $sort = Request::getString('sort', 'uid');
 $desc = Request::getString('desc');
 $val = Request::getString('val');
+
+if (!empty($op1)) {
+    $op = $op1;
+} elseif (!empty($op2)) {
+    $op = $op2;
+}
 
 switch ($op) {
     case "update_user":
@@ -174,6 +222,11 @@ switch ($op) {
         header("location:main.php?groupid=$groupid");
         break;
 
+    case "del_users":
+        del_users();
+        header("location:{$_SERVER['HTTP_REFERER']}");
+        break;
+
     case "update_timezone_offset":
         update_users_value('timezone_offset', $val);
         header("location:{$_SERVER['HTTP_REFERER']}");
@@ -192,6 +245,8 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign("now_op", $op);
+$xoTheme->addStylesheet('/modules/tadtools/css/font-awesome/css/font-awesome.css');
+$xoTheme->addStylesheet(XOOPS_URL . "/modules/tadtools/css/xoops_adm{$_SEESION['bootstrap']}.css");
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/my-input.css');
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_users/css/module.css');
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/font-awesome/css/font-awesome.css');
 include_once 'footer.php';

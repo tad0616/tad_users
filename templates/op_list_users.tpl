@@ -101,7 +101,7 @@
             <{/foreach}>
         </table>
     </div>
-
+    <{$token_form}>
 </form>
 
 <div class="bar">

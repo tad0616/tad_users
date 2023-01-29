@@ -87,13 +87,18 @@ define("_MA_TADUSERS_THEME", "使用佈景");
 
 define("_MA_TADUSERS_CHECKMARK_MEMBER", "將勾選的會員");
 define("_MA_TADUSERS_GROUP_ACTIONS", "執行群組動作");
-define("_MA_TADUSERS_JOIN_TO_GROUP", "加入右側指定群組");
-define("_MA_TADUSERS_MOVE_OUT_GROUP", "移出右側指定群組");
+define("_MA_TADUSERS_JOIN_TO_GROUP", "加入群組");
+define("_MA_TADUSERS_MOVE_OUT_GROUP", "移出群組");
 define("_MA_TADUSERS_GROUPS", "群組");
-define("_MA_TADUSERS_OR_UPDATE", "或更新");
-define("_MA_TADUSERS_SELECT_FIELD", "選擇欄位");
+define("_MA_TADUSERS_OR_UPDATE", "或");
+define("_MA_TADUSERS_SELECT_FIELD", "選擇欲執行動作");
 define("_MA_TADUSERS_UPDATE_TIMEZONE", "更新「時區」為");
 define("_MA_TADUSERS_UPDATE_THEME", "更新「佈景」為");
-define("_MA_TADUSERS_VALUE", "的值為");
+define("_MA_TADUSERS_DEL_USERS", "刪除帳號");
 define("_MA_TADUSERS_GO", "執行");
 define("_MA_TADUSERS_SELECT_ACTION", "請選擇動作");
+
+define('_MA_TADUSERS_NO_ADMINSUPP', '管理員無法被刪除： %s <br>');
+define('_MA_TADUSERS_NO_SUPP', '無法刪除會員：%s <br>');
+define('_MA_TADUSERS_USERS_ERROR', '錯誤：<br><br> %s');
+define('_MA_TADUSERS_DBUPDATED', '已刪除會員帳號');
