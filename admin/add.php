@@ -1,25 +1,148 @@
 <?php
-
 use Xmf\Request;
+use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = "tad_users_admin.tpl";
 include_once "header.php";
 include_once "../function.php";
 
+/*-----------執行動作判斷區----------*/
+$op = Request::getString('op');
+$data = Request::getArray('data');
+$groups = Request::getArray('groups');
+$intrest = Request::getString('intrest');
+
+switch ($op) {
+    case "check_set";
+        check_set($data, $groups, $intrest);
+        break;
+
+    case "check_user";
+        check_user($data, $groups, $intrest);
+        break;
+
+    case "import_check";
+        import_check($groups, $intrest);
+        break;
+
+    case "add_user";
+        $msg = add_user($data, $groups);
+        $result_msg = adduser_msg($msg);
+        redirect_header($_SERVER['PHP_SELF'], 10, $result_msg);
+        break;
+
+    default:
+        add_user_form();
+        $op = 'add_user_form';
+        break;
+}
+
+/*-----------秀出結果區--------------*/
+$xoopsTpl->assign("now_op", $op);
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_users/css/module.css');
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/font-awesome/css/font-awesome.css');
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/vtable.css');
+include_once 'footer.php';
+
 /*-----------function區--------------*/
+
+//匯入檢查
+function import_check($groups = [], $intrest = '')
+{
+    global $xoopsTpl;
+
+    if (!file_exists($_FILES['userfile']['tmp_name'])) {
+        redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADUSERS_FILE_NOT_EXIST);
+    }
+
+    $group_array = group_array();
+    $xoopsTpl->assign('group_array', $group_array);
+    $xoopsTpl->assign('groups', $groups);
+    $xoopsTpl->assign('intrest', $intrest);
+
+    require XOOPS_ROOT_PATH . '/modules/tadtools/vendor/phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php';
+    $reader = \PHPExcel_IOFactory::createReader('Excel2007');
+    $PHPExcel = $reader->load($_FILES['userfile']['tmp_name']); // 檔案名稱
+
+    $sheet = $PHPExcel->getSheet(0); // 讀取第一個工作表(編號從 0 開始)
+    $highestRow = $sheet->getHighestRow(); // 取得總列數
+    $colString = $sheet->getHighestDataColumn();
+    $highestColumn = \PHPExcel_Cell::columnIndexFromString($colString);
+
+    $cell = $sheet->getCellByColumnAndRow(0, 1);
+    $val = get_value_of_cell($cell);
+
+    preg_match_all('/\d+/', $val, $matches, PREG_OFFSET_CAPTURE);
+
+    $myts = MyTextSanitizer::getInstance();
+    $users = [];
+    for ($row = 1; $row <= $highestRow; $row++) {
+        //讀取一列中的每一格
+        for ($col = 0; $col < $highestColumn; $col++) {
+            $cell = $sheet->getCellByColumnAndRow($col, $row);
+            $val = $myts->addSlashes(get_value_of_cell($cell));
+            $users[$row][$col] = $val;
+            if ($col == 0) {
+                if (empty($val) or $val == "Account" or $val == "帳號") {
+                    unset($users[$row]);
+                    continue 2;
+                }
+
+                $users[$row]['uname'] = $val;
+                $users[$row]['id_existed'] = id_existed($val);
+            } elseif ($col == 1) {
+                $users[$row]['name'] = $val;
+            } elseif ($col == 2) {
+                $users[$row]['email'] = $val;
+            } elseif ($col == 3) {
+                $users[$row]['passwd'] = $val;
+            }
+        }
+    }
+
+    $xoopsTpl->assign('users', $users);
+
+}
+
+//針對excel各種數據類型
+function get_value_of_cell($cell = "")
+{
+    if (is_null($cell)) {
+        $value = $cell->setIterateOnlyExistingCells(true);
+    } else {
+        if (strstr($cell->getValue(), '=')) {
+            $value = $cell->getCalculatedValue();
+        } elseif ($cell->getValue() instanceof PHPExcel_RichText) {
+            $value = $cell->getValue()->getPlainText();
+        } elseif (PHPExcel_Shared_Date::isDateTime($cell)) {
+            $value = PHPExcel_Shared_Date::ExcelToPHPObject($cell->getValue())->format('Y-m-d');
+        } else {
+            $value = $cell->getValue();
+        }
+    }
+    return $value;
+}
 
 function add_user_form()
 {
     global $xoopsTpl;
-    $group_select = group_select("data[groupid]");
-    $xoopsTpl->assign('group_select', $group_select);
+    $group_array = group_array();
+    $xoopsTpl->assign('group_array', $group_array);
+
+    $FormValidator = new FormValidator(".myForm", false);
+    $FormValidator->render('topLeft');
 }
 
 //新增後的檢查動作
-function check_set($data = array())
+function check_set($data = [], $groups = [], $intrest = '')
 {
     global $xoopsTpl;
+    $group_array = group_array();
+    $xoopsTpl->assign('group_array', $group_array);
+    $xoopsTpl->assign('groups', $groups);
+    $xoopsTpl->assign('intrest', $intrest);
+
     $j = $data['id_start'];
     $csv = "";
     $file_name = session_id() . date("YmdHis");
@@ -29,7 +152,7 @@ function check_set($data = array())
     for ($i = 0; $i < $data['user_num']; $i++) {
 
         //帳號
-        $acc['id'] = $id = $data['id_str'] . $j;
+        $acc['id'] = $acc['name'] = $id = $data['id_str'] . $j;
 
         $acc['id_existed'] = id_existed($id);
 
@@ -45,8 +168,10 @@ function check_set($data = array())
             $acc['passwd'] = $data['password2'] . $j;
         }
 
+        $acc['email'] = $acc['id'] . '@' . $_SERVER['HTTP_HOST'];
+
         $passwd = $acc['passwd'];
-        if (!$id_existed) {
+        if (!$acc['id_existed']) {
             $csv .= "{$id},{$passwd}\n";
         }
         $accounts[$j] = $acc;
@@ -62,33 +187,16 @@ function check_set($data = array())
 
 }
 
-/*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$data = Request::getArray('data');
+//新增後的檢查動作
+function check_user($data = [], $groups = [], $intrest = '')
+{
+    global $xoopsTpl;
 
-switch ($op) {
-    /*---判斷動作請貼在下方---*/
+    $group_array = group_array();
+    $xoopsTpl->assign('group_array', $group_array);
+    $xoopsTpl->assign('groups', $groups);
 
-    case "check_set";
-        check_set($data);
-        break;
-
-    case "add_user";
-        $msg = add_user($_POST['data'], $_POST['groupid']);
-        $result_msg = adduser_msg($msg);
-        redirect_header($_SERVER['PHP_SELF'], 10, $result_msg);
-        break;
-
-    default:
-        add_user_form();
-        $op = 'add_user_form';
-        break;
-        /*---判斷動作請貼在上方---*/
+    $data['id_existed'] = id_existed($data['uname']);
+    $xoopsTpl->assign('acc', $data);
+    $xoopsTpl->assign('intrest', $intrest);
 }
-
-/*-----------秀出結果區--------------*/
-$xoopsTpl->assign("now_op", $op);
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_users/css/module.css');
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/font-awesome/css/font-awesome.css');
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/vtable.css');
-include_once 'footer.php';

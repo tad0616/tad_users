@@ -45,15 +45,15 @@ define("_MA_TADUSERS_RESULT", "Results");
 
 define("_MA_TADUSERS_COPY", "Be sure to copy or <a href='%s' target='_blank'>save the following table</a> to retrieve your account password later.");
 
-define("_MA_TADUSERS_IMPORT_FILE", "Import account number.");
-define("_MA_TADUSERS_IMPORT", "remit");
-define("_MA_TADUSERS_IMPORT_README", "Please save as a <a href='... /demo.xlsx'>xlsx file</a> according to the following format. /demo.xlsx'>xlsx file</a> in the following format for importing.");
-define("_MA_TADUSERS_EXCEL_COL", "Username,real name,email,password");
+define("_MA_TADUSERS_IMPORT_FILE", "Select Account File");
+define("_MA_TADUSERS_IMPORT", "Import .xlsx Account File");
+define("_MA_TADUSERS_IMPORT_README", "Please save in the following format <a href='../demo.xlsx' style='color: blue;'>xlsx</a> for importing:");
+define("_MA_TADUSERS_EXCEL_COL", "<table class='table table-bordered'><tr><td>Account</td><td>Name</td><td>Email</td><td>Password</td></tr></table>");
 define("_MA_TADUSERS_UNAME", "uname");
 define("_MA_TADUSERS_NAME", "name");
 define("_MA_TADUSERS_ID_CHK", "Account Check");
 define("_MA_TADUSERS_ID_EXIST", "If your account already exists, you will skip this account.");
-define("_MA_TADUSERS_JOIN_GROUP", "Which group should I join for the above account?");
+define("_MA_TADUSERS_JOIN_GROUP", "The above accounts will be added to the following groups:");
 define("_MA_TADUSERS_ERROR", "Can't check existing accounts");
 
 define("_MA_TADUSERS_ACCOUNT_GENERATION", "Mass account generation");
@@ -80,6 +80,7 @@ define("_MA_TADUSERS_ICQ", "The 'Identity' used to store the OpenID");
 define("_MA_TADUSERS_OCC", "The 'Title' used to store the OpenID");
 define("_MA_TADUSERS_INTREST", "The 'School Code' used to store the OpenID");
 define("_MA_TADUSERS_BIO", "The 'Characters' used to store the OpenID");
+define("_MA_TADUSERS_NG", "Reason for error");
 define("_MA_TADUSERS_EDIT", "Change Password or Group");
 define("_MA_TADUSERS_MODIFY_OPENID_PASSWD", "OpenID account can be changed at tad_login.");
 
@@ -101,3 +102,17 @@ define('_MA_TADUSERS_NO_ADMINSUPP', 'Admin user cannot be deleted: %s <br>');
 define('_MA_TADUSERS_NO_SUPP', 'User cannot be deleted: %s <br>');
 define('_MA_TADUSERS_USERS_ERROR', 'Error:<br><br> %s');
 define('_MA_TADUSERS_DBUPDATED', 'Deleted member account');
+
+define('_MA_TADUSERS_MEMBER_CHECK', 'Member Check');
+define('_MA_TADUSERS_MEMBER_CHECK_UID_0', 'there are a total of invalid permission data with a user ID (uid) of 0:');
+define('_MA_TADUSERS_CLEAR_UID_0', ', Click here to clear.');
+define('_MA_TADUSERS_ALL_OK', ':All user information is correct');
+define('_MA_TADUSERS_NOT_MEMBER', 'Not in the members group, please join it.');
+define('_MA_TADUSERS_TIMEZONE_NG', 'Member\'s time zone (%s) is not the same as the default time zone, please set it to %s.');
+define('_MA_TADUSERS_THEME_NG', 'Member theme (%s) is not set, please set it to %s.');
+define('_MA_TADUSERS_THEME_NG2', 'Member theme (%s) is not the same as the default theme, please set it to %s.');
+define('_MA_TADUSERS_INPUT_KEYWORD', 'Please enter the keyword');
+define("_MA_TADUSERS_CREATE_ACCOUNT", "Create a new account");
+define('_MA_TADUSERS_ADD_USER', 'Create account');
+define('_MA_TADUSERS_INTREST_COL', 'School Code');
+define('_MA_TADUSERS_FILE_NOT_EXIST', 'File does not exist');

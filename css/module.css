@@ -93,25 +93,32 @@ ul {
 .tooltip-inner {
     max-width: 600px;
     font-size: 0.95em;
-    background-color: #830d48;
+    background-color: #4e6970;
     box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
     line-height: 1.8;
 }
 
 .tooltip.bs-tooltip-right .arrow:before {
-    border-right-color: #830d48 !important;
+    border-right-color: #4e6970 !important;
 }
 
 .tooltip.bs-tooltip-left .arrow:before {
-    border-left-color: #830d48 !important;
+    border-left-color: #4e6970 !important;
 }
 
 .tooltip.bs-tooltip-bottom .arrow:before {
-    border-bottom-color: #830d48 !important;
+    border-bottom-color: #4e6970 !important;
 }
 
 .tooltip.bs-tooltip-top .arrow:before {
-    border-top-color: #830d48 !important;
+    border-top-color: #4e6970 !important;
+}
+
+.tooltip-inner li{
+    max-width: 600px;
+    font-size: 0.95em;
+    line-height: 1;
+    color: white;
 }
 
 .bar {

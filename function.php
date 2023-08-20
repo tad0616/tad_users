@@ -1,10 +1,30 @@
 <?php
 use XoopsModules\Tadtools\Utility;
 
-//取得群組下拉選單
-function group_select($select_name = "groupid", $value = array(), $js = "")
+function group_array()
 {
     global $xoopsDB;
+    $groups = [];
+    $sql = "select groupid, name, group_type from " . $xoopsDB->prefix("groups");
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    while (list($groupid, $name, $group_type) = $xoopsDB->fetchRow($result)) {
+        $groups[$groupid] = $name;
+    }
+    return $groups;
+}
+
+//取得群組下拉選單
+function group_select($select_name = "groupid", $value = array(), $js = "", $mode = '')
+{
+    global $xoopsDB;
+
+    $groupid_count = [];
+    $sql = "select groupid, count(groupid) from " . $xoopsDB->prefix("groups_users_link") . " group by `groupid`";
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    while (list($groupid, $count) = $xoopsDB->fetchRow($result)) {
+        $groupid_count[$groupid] = (int) $count;
+    }
+
     $sql = "select groupid, name, group_type from " . $xoopsDB->prefix("groups");
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
@@ -14,13 +34,14 @@ function group_select($select_name = "groupid", $value = array(), $js = "")
         if ($group_type == 'Anonymous') {
             continue;
         }
-
-        $option .= "<option value='$groupid' $selected>$name</option>";
+        $count = (int) $groupid_count[$groupid];
+        $option .= "<option value='$groupid' $selected>{$name} ({$count})</option>";
     }
     $main = "
-	<select name='{$select_name}' class='form-control' $js>
-	$option
-	</select>";
+    <select name='{$select_name}' class='form-control group_select' $js>
+    $option
+    </select>";
+
     return $main;
 }
 
@@ -43,9 +64,9 @@ function id_existed($id = "")
 }
 
 //新增XOOPS會員
-function add_user($data = array(), $groupid = "")
+function add_user($data = [], $groups = [])
 {
-    global $xoopsConfig, $xoopsDB, $xoopsModule, $xoopsUser, $xoopsModuleConfig;
+    global $xoopsConfig;
 
     define('XOOPS_XMLRPC', 1);
     $_SERVER['REQUEST_METHOD'] = 'POST';
@@ -57,6 +78,7 @@ function add_user($data = array(), $groupid = "")
         $uname = (empty($mem['uname'])) ? $mem['id'] : $mem['uname'];
         $name = (empty($mem['name'])) ? $mem['id'] : $mem['name'];
         $email = (empty($mem['email'])) ? "{$uname}@{$_SERVER['HTTP_HOST']}" : $mem['email'];
+        $intrest = (empty($mem['intrest'])) ? '' : $mem['intrest'];
         $newuser = &$member_handler->createUser();
 
         $newuser->setVar('uname', $uname);
@@ -71,7 +93,8 @@ function add_user($data = array(), $groupid = "")
         $newuser->setVar('umode', $xoopsConfig['com_mode']);
         $newuser->setVar('level', 1);
         $newuser->setVar('theme', $xoopsConfig['theme_set']);
-        $newuser->setVar('timezone_offset', "8.0");
+        $newuser->setVar('timezone_offset', $xoopsConfig['default_TZ']);
+        $newuser->setVar('intrest', $intrest);
 
         if (!$member_handler->insertUser($newuser, true)) {
             $msg['err'][] = "{$mem['id']}";
@@ -80,13 +103,16 @@ function add_user($data = array(), $groupid = "")
             $msg['ok'][] = "{$mem['id']}";
         }
         $newid = $newuser->getVar('uid');
-        if ($groupid == XOOPS_GROUP_USERS) {
-            if (!$member_handler->addUserToGroup(XOOPS_GROUP_USERS, $newid)) {
-                $msg['g_err'][] = "{$mem['id']}";
-            }
-        } else {
-            if (!$member_handler->addUserToGroup(XOOPS_GROUP_USERS, $newid) or !$member_handler->addUserToGroup($groupid, $newid)) {
-                $msg['g_err'][] = "{$mem['id']}";
+
+        foreach ($groups as $groupid) {
+            if ($groupid == XOOPS_GROUP_USERS) {
+                if (!$member_handler->addUserToGroup(XOOPS_GROUP_USERS, $newid)) {
+                    $msg['g_err'][] = "{$mem['id']}";
+                }
+            } else {
+                if (!$member_handler->addUserToGroup(XOOPS_GROUP_USERS, $newid) or !$member_handler->addUserToGroup($groupid, $newid)) {
+                    $msg['g_err'][] = "{$mem['id']}";
+                }
             }
         }
 

@@ -45,15 +45,15 @@ define("_MA_TADUSERS_RESULT", "結果");
 
 define("_MA_TADUSERS_COPY", "請記得將下表複製或<a href='%s' target='_blank'>儲存</a>下來，以便日後查閱帳號密碼。");
 
-define("_MA_TADUSERS_IMPORT_FILE", "匯入帳號檔案：");
-define("_MA_TADUSERS_IMPORT", "匯入");
-define("_MA_TADUSERS_IMPORT_README", "請依照以下格式，存成<a href='../demo.xlsx'>xlsx檔</a>，以便匯入：");
-define("_MA_TADUSERS_EXCEL_COL", "帳號,真實名稱,Email,密碼");
+define("_MA_TADUSERS_IMPORT_FILE", "選擇帳號檔案");
+define("_MA_TADUSERS_IMPORT", "匯入 .xlsx 帳號檔");
+define("_MA_TADUSERS_IMPORT_README", "請依照以下格式，存成 <a href='../demo.xlsx' style='color: blue;'>xlsx 匯入檔</a>，以便匯入：");
+define("_MA_TADUSERS_EXCEL_COL", "<table class='table table-bordered'><tr><td>帳號</td><td>真實名稱</td><td>Email</td><td>密碼</td></tr></table>");
 define("_MA_TADUSERS_UNAME", "帳號");
 define("_MA_TADUSERS_NAME", "真實名稱");
 define("_MA_TADUSERS_ID_CHK", "帳號檢查");
 define("_MA_TADUSERS_ID_EXIST", "帳號已存在，將略過此帳號");
-define("_MA_TADUSERS_JOIN_GROUP", "以上帳號要加入哪個群組？");
+define("_MA_TADUSERS_JOIN_GROUP", "以上帳號將會加入以下群組：");
 define("_MA_TADUSERS_ERROR", "無法查詢現有帳號");
 
 define("_MA_TADUSERS_ACCOUNT_GENERATION", "大量產生帳號");
@@ -61,7 +61,7 @@ define("_MA_TADUSERS_EDIT_ACCOUNT", "修改『%s』資料");
 define("_MA_TADUSERS_PASSWD", "密碼");
 define("_MA_TADUSERS_PASSWD_TIP", "要改密碼才需填寫");
 define("_MA_TADUSERS_TIMEZONE", "時區");
-define("_MA_TADUSERS_GROUP", "所屬群組");
+define("_MA_TADUSERS_SET_GROUP", "加入群組");
 define("_MA_TADUSERS_COL", "欄位");
 define("_MA_TADUSERS_IMPORT_ACCOUNT", "匯入帳號資料");
 
@@ -80,6 +80,7 @@ define("_MA_TADUSERS_ICQ", "通常用來儲存 OpenID 的「身份別」");
 define("_MA_TADUSERS_OCC", "通常用來儲存 OpenID 的「職稱」");
 define("_MA_TADUSERS_INTREST", "通常用來儲存 OpenID 的「學校代碼」");
 define("_MA_TADUSERS_BIO", "通常用來儲存 OpenID 的各種「角色」");
+define("_MA_TADUSERS_NG", "錯誤原因");
 define("_MA_TADUSERS_EDIT", "修改密碼或群組");
 define("_MA_TADUSERS_MODIFY_OPENID_PASSWD", "OpenID 帳號請至 tad_login 修改");
 
@@ -102,3 +103,19 @@ define('_MA_TADUSERS_NO_ADMINSUPP', '管理員無法被刪除： %s <br>');
 define('_MA_TADUSERS_NO_SUPP', '無法刪除會員：%s <br>');
 define('_MA_TADUSERS_USERS_ERROR', '錯誤：<br><br> %s');
 define('_MA_TADUSERS_DBUPDATED', '已刪除會員帳號');
+
+define('_MA_TADUSERS_MEMBER_CHECK', '會員檢測');
+define('_MA_TADUSERS_MEMBER_CHECK_UID_0', '中有使用者編號 (uid) 為 0 的無效權限資料數共：');
+define('_MA_TADUSERS_CLEAR_UID_0', '筆，點此清除之');
+define('_MA_TADUSERS_ALL_OK', '的所有使用者資料均正確');
+define('_MA_TADUSERS_NOT_MEMBER', '不在會員群組中，請加入之');
+define('_MA_TADUSERS_TIMEZONE_NG', '會員時區 (%s) 和預設時區不相同，請設為 %s');
+define('_MA_TADUSERS_THEME_NG', '未設定會員佈景 (%s) ，請設為 %s');
+define('_MA_TADUSERS_THEME_NG2', '會員佈景 (%s) 和預設佈景不相同，請設為 %s');
+define('_MA_TADUSERS_INPUT_KEYWORD', '請輸入關鍵字');
+define("_MA_TADUSERS_CREATE_ACCOUNT", "建立新帳號");
+define('_MA_TADUSERS_EMAIL', '電子信箱');
+define('_MA_TADUSERS_ADD_USER', '建立帳號');
+define('_MA_TADUSERS_INTREST_COL', '學校代碼');
+define('_MA_TADUSERS_INTREST_COL_DESC', '非必填，教育部學校代碼 6 碼');
+define('_MA_TADUSERS_FILE_NOT_EXIST', '檔案不存在');

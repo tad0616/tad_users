@@ -17,11 +17,6 @@ $adminmenu[$i]['link'] = "admin/add.php";
 $adminmenu[$i]['icon'] = "images/admin/add.png";
 
 $i++;
-$adminmenu[$i]['title'] = _MI_TADUSERS_ADMENU3;
-$adminmenu[$i]['link'] = "admin/import.php";
-$adminmenu[$i]['icon'] = "images/admin/team-leader.png";
-
-$i++;
 $adminmenu[$i]['title'] = _MI_TAD_ADMIN_ABOUT;
 $adminmenu[$i]['link'] = 'admin/about.php';
 $adminmenu[$i]['icon'] = 'images/admin/about.png';

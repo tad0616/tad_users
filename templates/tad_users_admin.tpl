@@ -4,6 +4,6 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="tooltip" data-bs-toggle="tooltip"]').tooltip();
     });
 </script>

@@ -1,3 +1,10 @@
+Tad User 1.8 (released 2023-08-20)
+===========================================
+1. Add member checking function.
+2. Integrate the function of adding new accounts
+3. Add single account add function.
+4. Optimize the interface
+
 Tad User 1.7 (released on 2023-01-29)
 ===========================================
 1. Fix the problem that "Join specified group" and "Remove specified group" cannot be used in batch
