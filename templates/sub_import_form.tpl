@@ -31,7 +31,7 @@
         <div class="col-sm-9">
             <select name="groups[]" multiple id="user_group" class="form-control validate[required]">
                 <{foreach from=$group_array key=groupid item=title name=group_array}>
-                    <option value="<{$groupid}>" <{if $groupid|in_array:$user.group|| $groupid==2}>selected<{/if}>><{$title}></option>
+                    <option value="<{$groupid}>" <{if $user.group && ($groupid|in_array:$user.group|| $groupid==2)}>selected<{/if}>><{$title}></option>
                 <{/foreach}>
             </select>
         </div>

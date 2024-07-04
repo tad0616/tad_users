@@ -81,10 +81,7 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign("now_op", $op);
-$xoTheme->addStylesheet('/modules/tadtools/css/font-awesome/css/font-awesome.css');
-$xoTheme->addStylesheet(XOOPS_URL . "/modules/tadtools/css/xoops_adm{$_SEESION['bootstrap']}.css");
 $xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/my-input.css');
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_users/css/module.css');
 include_once 'footer.php';
 
 /*-----------function區--------------*/
@@ -119,9 +116,8 @@ function check_members($groupid = '')
     list($no_uid_members) = $xoopsDB->fetchRow($result);
     $xoopsTpl->assign('no_uid_members', $no_uid_members);
 
-    $users = [];
+    $users = $members = [];
     if ($groupid != 2) {
-        $members = [];
         $sql = "select a.`uid` from " . $xoopsDB->prefix("users") . " as a join " . $xoopsDB->prefix("groups_users_link") . " as b on a.uid=b.uid where b.groupid='2'";
         $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         while (list($uid) = $xoopsDB->fetchRow($result)) {
@@ -132,7 +128,7 @@ function check_members($groupid = '')
     $sql = "select a.* from " . $xoopsDB->prefix("users") . " as a join " . $xoopsDB->prefix("groups_users_link") . " as b on a.uid=b.uid where b.groupid='$groupid'";
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     while ($user = $xoopsDB->fetchArray($result)) {
-        if ($groupid != 2 && !in_array($user['uid'], $members)) {
+        if (!empty($members) && $groupid != 2 && !in_array($user['uid'], $members)) {
             $user['ng'][] = _MA_TADUSERS_NOT_MEMBER;
         }
         if ($xoopsConfig['default_TZ'] != $user['timezone_offset']) {
@@ -349,7 +345,7 @@ function del_users()
             $uid = (int) $uid;
             $user = $member_handler->getUser($uid);
             $groups = $user->getGroups();
-            if (in_array(XOOPS_GROUP_ADMIN, $groups)) {
+            if (!empty($groups) && in_array(XOOPS_GROUP_ADMIN, $groups)) {
                 $error .= sprintf(_MA_TADUSERS_NO_ADMINSUPP, $user->getVar('uname'));
             } elseif (!$member_handler->deleteUser($user)) {
                 $error .= sprintf(_MA_TADUSERS_NO_SUPP, $user->getVar('uname'));

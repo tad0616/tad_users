@@ -1,6 +1,6 @@
 <h1 class="my"><{$smarty.const._MA_TADUSERS_EDIT_ACCOUNT|sprintf:$user.uname}></h1>
 
-<{includeq file="$xoops_rootpath/modules/tad_users/templates/sub_search_bar.tpl"}>
+<{include file="$xoops_rootpath/modules/tad_users/templates/sub_search_bar.tpl"}>
 
 <form action="main.php" method="post" id="myForm" class="myForm mb-4">
 

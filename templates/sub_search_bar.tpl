@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="col-sm-6">
-            <{includeq file="$xoops_rootpath/modules/tad_users/templates/sub_tools.tpl"}>
+            <{include file="$xoops_rootpath/modules/tad_users/templates/sub_tools.tpl"}>
         </div>
         <div class="col-sm-3">
             <div class="input-group">

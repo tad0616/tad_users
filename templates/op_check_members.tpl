@@ -4,4 +4,4 @@
 
 <{/if}>
 
-<{includeq file="$xoops_rootpath/modules/tad_users/templates/sub_list_user.tpl" mode="ng"}>
+<{include file="$xoops_rootpath/modules/tad_users/templates/sub_list_user.tpl" mode="ng"}>

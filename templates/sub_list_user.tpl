@@ -5,7 +5,7 @@
     }
 </style>
 <form action="main.php" method="post" id="myForm" class="myForm">
-    <{includeq file="$xoops_rootpath/modules/tad_users/templates/sub_search_bar.tpl"}>
+    <{include file="$xoops_rootpath/modules/tad_users/templates/sub_search_bar.tpl"}>
     <{if $users}>
         <div class="table-responsive">
             <table class="table table-hover table-striped footable">
@@ -14,43 +14,43 @@
                         <th class="c n" data-hide="phone,tablet"><{$smarty.const._MA_TADUSERS_DEL}></th>
                         <th class="c n">
                             <input type="checkbox" id="clickAll">
-                            <{includeq file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="uid" col_title="uid"}>
+                            <{include file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="uid" col_title="uid"}>
                         </th>
                         <th class="c n" data-class="expand">
-                            <{includeq file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="name" col_title=$smarty.const._MA_TADUSERS_NAME}>
+                            <{include file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="name" col_title=$smarty.const._MA_TADUSERS_NAME}>
                         </th>
                         <th class="c n">
-                            <{includeq file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="uname" col_title=$smarty.const._MA_TADUSERS_UNAME}>
+                            <{include file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="uname" col_title=$smarty.const._MA_TADUSERS_UNAME}>
                         </th>
                         <th class="c n" data-hide="phone">
-                            <{includeq file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="email" col_title="Email"}>
+                            <{include file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="email" col_title="Email"}>
                         </th>
                         <th class="c n"><{$smarty.const._TAD_FUNCTION}></th>
                         <th class="c n" data-hide="phone">
-                            <{includeq file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="timezone_offset" col_title=$smarty.const._MA_TADUSERS_TIMEZONE}>
+                            <{include file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="timezone_offset" col_title=$smarty.const._MA_TADUSERS_TIMEZONE}>
                         </th>
                         <th class="c n" data-hide="phone,tablet">
-                            <{includeq file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="theme" col_title=$smarty.const._MA_TADUSERS_THEME}>
+                            <{include file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="theme" col_title=$smarty.const._MA_TADUSERS_THEME}>
                         </th>
                         <th class="c n" data-hide="phone,tablet">
-                            <{includeq file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="last_login" col_title=$smarty.const._MA_TADUSERS_LASTLOGIN}>
+                            <{include file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="last_login" col_title=$smarty.const._MA_TADUSERS_LASTLOGIN}>
                         </th>
                         <th class="c n" data-hide="phone,tablet" data-toggle="tooltip" data-bs-toggle="tooltip" title="<{$smarty.const._MA_TADUSERS_ICQ}>">
-                            <{includeq file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="user_icq" col_title="icq"}>
+                            <{include file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="user_icq" col_title="icq"}>
                         </th>
                         <th class="c n" data-hide="phone" data-toggle="tooltip" data-bs-toggle="tooltip" title="<{$smarty.const._MA_TADUSERS_OCC}>">
-                            <{includeq file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="user_occ" col_title="occ"}>
+                            <{include file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="user_occ" col_title="occ"}>
                         </th>
                         <th class="c n" data-hide="phone" data-toggle="tooltip" data-bs-toggle="tooltip" title="<{$smarty.const._MA_TADUSERS_INTREST}>">
-                            <{includeq file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="user_intrest" col_title="intrest"}>
+                            <{include file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="user_intrest" col_title="intrest"}>
                         </th>
                         <{if $mode=='ng'}>
                             <th class="c n" data-hide="phone,tablet" style="min-width: 300px;" data-toggle="tooltip" data-bs-toggle="tooltip" title="<{$smarty.const._MA_TADUSERS_NG}>">
-                                <{includeq file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="ng" col_title="ng"}>
+                                <{include file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="ng" col_title="ng"}>
                             </th>
                         <{else}>
                             <th class="c n" data-hide="phone,tablet" style="min-width: 300px;" data-toggle="tooltip" data-bs-toggle="tooltip" title="<{$smarty.const._MA_TADUSERS_BIO}>">
-                                <{includeq file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="bio" col_title="bio"}>
+                                <{include file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="bio" col_title="bio"}>
                             </th>
                         <{/if}>
                     </tr>

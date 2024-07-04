@@ -30,7 +30,7 @@ function group_select($select_name = "groupid", $value = array(), $js = "", $mod
 
     $option = "<option value=''></option>";
     while (list($groupid, $name, $group_type) = $xoopsDB->fetchRow($result)) {
-        $selected = (in_array($groupid, $value)) ? "selected" : "";
+        $selected = (!empty($value) && in_array($groupid, $value)) ? "selected" : "";
         if ($group_type == 'Anonymous') {
             continue;
         }
