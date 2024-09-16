@@ -12,7 +12,7 @@
     </tr>
 
     <{foreach from=$users key=i item=user}>
-        <{if $user.id_existed}>
+        <{if $user.id_existed|default:false}>
             <tr class="bg-white">
                 <td><{$user.uname}></td>
                 <td><{$user.name}></td>

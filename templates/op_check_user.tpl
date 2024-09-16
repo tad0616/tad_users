@@ -12,7 +12,7 @@
             <th><{$smarty.const._MA_TADUSERS_ID_CHK}></th>
         </tr>
 
-        <{if $acc.id_existed}>
+        <{if $acc.id_existed|default:false}>
             <tr class="bg-white">
                 <td><{$acc.id}></td>
                 <td><{$acc.name}></td>

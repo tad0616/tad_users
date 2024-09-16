@@ -6,7 +6,7 @@
 </style>
 <form action="main.php" method="post" id="myForm" class="myForm">
     <{include file="$xoops_rootpath/modules/tad_users/templates/sub_search_bar.tpl"}>
-    <{if $users}>
+    <{if $users|default:false}>
         <div class="table-responsive">
             <table class="table table-hover table-striped footable">
                 <thead>
@@ -107,7 +107,7 @@
                                 <li class="text-danger"><{$ng}></li>
                             <{/foreach}>
                         <{else}>
-                            <span <{if $user.bio_list}> data-toggle="tooltip" data-bs-toggle="tooltip" data-html="true" data-bs-html="true" title="<{$user.bio_list}>"<{/if}>><{$user.bio}></span>
+                            <span <{if $user.bio_list|default:false}> data-toggle="tooltip" data-bs-toggle="tooltip" data-html="true" data-bs-html="true" title="<{$user.bio_list}>"<{/if}>><{$user.bio}></span>
                         <{/if}>
                         </td>
                     </tr>

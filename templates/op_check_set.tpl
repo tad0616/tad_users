@@ -14,7 +14,7 @@
         </tr>
 
     <{foreach from=$accounts key=i item=acc}>
-        <{if $acc.id_existed}>
+        <{if $acc.id_existed|default:false}>
             <tr class="bg-white">
                 <td><{$acc.id}></td>
                 <td><{$acc.name}></td>
