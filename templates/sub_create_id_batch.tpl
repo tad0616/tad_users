@@ -6,7 +6,7 @@
             <{$smarty.const._MA_TADUSERS_IDNUM}>
         </label>
         <div class="col-sm-8">
-            <input type="number" name="data[user_num]" id="user_num" class="form-control validate[required]" value="<{$user_num}>" >
+            <input type="number" name="data[user_num]" id="user_num" class="form-control validate[required]" value="<{$user_num|default:''}>" >
         </div>
 
     </div>
@@ -16,7 +16,7 @@
             <{$smarty.const._MA_TADUSERS_IDSTR}>
         </label>
         <div class="col-sm-8">
-            <input type="text" name="data[id_str]" id="id_str" class="form-control validate[required]" value="<{$id_str}>" >
+            <input type="text" name="data[id_str]" id="id_str" class="form-control validate[required]" value="<{$id_str|default:''}>" >
         </div>
 
     </div>
@@ -26,7 +26,7 @@
             <{$smarty.const._MA_TADUSERS_IDSTART}>
         </label>
         <div class="col-sm-8">
-            <input type="number" name="data[id_start]" id="id_start" class="form-control validate[required]" value="<{$id_start}>" >
+            <input type="number" name="data[id_start]" id="id_start" class="form-control validate[required]" value="<{$id_start|default:''}>" >
         </div>
     </div>
 
@@ -46,7 +46,7 @@
         <div class="col-sm-8">
             <select name="groups[]" multiple id="user_group" class="form-control validate[required]">
                 <{foreach from=$group_array key=groupid item=title name=group_array}>
-                    <option value="<{$groupid}>" <{if $user.group && ($groupid|in_array:$user.group || $groupid==2)}>selected<{/if}>><{$title}></option>
+                    <option value="<{$groupid|default:''}>" <{if $user.group && ($groupid|in_array:$user.group || $groupid==2)}>selected<{/if}>><{$title|default:''}></option>
                 <{/foreach}>
             </select>
         </div>

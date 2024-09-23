@@ -20,31 +20,31 @@
                 <td><{$acc.name}></td>
                 <td><{$acc.email}></td>
                 <td><{$acc.passwd}></td>
-                <td><{$intrest}></td>
+                <td><{$intrest|default:''}></td>
                 <td><{$smarty.const._MA_TADUSERS_ID_EXIST}></td>
             </tr>
         <{else}>
             <tr>
                 <td>
                     <{$acc.id}>
-                    <input type="hidden" name="data[<{$i}>][id]" value="<{$acc.id}>">
+                    <input type="hidden" name="data[<{$i|default:''}>][id]" value="<{$acc.id}>">
                 </td>
                 <td>
                     <{$acc.name}>
-                    <input type="hidden" name="data[<{$i}>][name]" value="<{$acc.name}>">
+                    <input type="hidden" name="data[<{$i|default:''}>][name]" value="<{$acc.name}>">
                 </td>
                 <td>
                     <{$acc.email}>
-                    <input type="hidden" name="data[<{$i}>][email]" value="<{$acc.email}>">
+                    <input type="hidden" name="data[<{$i|default:''}>][email]" value="<{$acc.email}>">
                 </td>
                 <td>
                     <{$acc.passwd}>
-                    <input type="hidden" name="data[<{$i}>][passwd]" value="<{$acc.passwd}>">
-                    <input type="hidden" name="data[<{$i}>][from]" value="our_member">
+                    <input type="hidden" name="data[<{$i|default:''}>][passwd]" value="<{$acc.passwd}>">
+                    <input type="hidden" name="data[<{$i|default:''}>][from]" value="our_member">
                 </td>
                 <td>
-                    <{$intrest}>
-                    <input type="hidden" name="data[<{$i}>][intrest]" value="<{$intrest}>">
+                    <{$intrest|default:''}>
+                    <input type="hidden" name="data[<{$i|default:''}>][intrest]" value="<{$intrest|default:''}>">
                 </td>
                 <td>OK</td>
             </tr>
@@ -58,8 +58,8 @@
         <td colspan=4>
 
             <{foreach from=$group_array key=groupid item=title name=group_array}>
-                <input type="checkbox" name="groups[]" id="group_<{$groupid}>" value="<{$groupid}>" <{if $groups && ($groupid|in_array:$groups|| $groupid==2)}>checked<{/if}>>
-                    <label for="group_<{$groupid}>"><{$title}></label>
+                <input type="checkbox" name="groups[]" id="group_<{$groupid|default:''}>" value="<{$groupid|default:''}>" <{if $groups && ($groupid|in_array:$groups|| $groupid==2)}>checked<{/if}>>
+                    <label for="group_<{$groupid|default:''}>"><{$title|default:''}></label>
             <{/foreach}>
         </td>
     </tr>

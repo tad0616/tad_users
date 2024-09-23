@@ -15,7 +15,7 @@
     </div>
 
 
-    <{$group_select}>
+    <{$group_select|default:''}>
     <div class="input-group-apppend input-group-addon group_select">
         <span class="input-group-text"><{$smarty.const._MA_TADUSERS_GROUPS}></span>
     </div>

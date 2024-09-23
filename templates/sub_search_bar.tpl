@@ -5,7 +5,7 @@
                 <div class="input-group-prepend input-group-addon">
                     <span class="input-group-text"><{$smarty.const._MA_TADUSERS_ONLY_LIST}></span>
                 </div>
-                <{$select}>
+                <{$select|default:''}>
                 <div class="input-group-append input-group-addon">
                     <span class="input-group-text"><{$smarty.const._MA_TADUSERS_GROUP_USERS}></span>
                 </div>

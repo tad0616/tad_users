@@ -1,4 +1,4 @@
-<{$Bootstrap3EditableCode}>
+<{$Bootstrap3EditableCode|default:''}>
 <style>
     .footable th{
         color:black;
@@ -104,7 +104,7 @@
                         <td class="c">
                         <{if $mode=='ng'}>
                             <{foreach from=$user.ng item=ng}>
-                                <li class="text-danger"><{$ng}></li>
+                                <li class="text-danger"><{$ng|default:''}></li>
                             <{/foreach}>
                         <{else}>
                             <span <{if $user.bio_list|default:false}> data-toggle="tooltip" data-bs-toggle="tooltip" data-html="true" data-bs-html="true" title="<{$user.bio_list}>"<{/if}>><{$user.bio}></span>
@@ -114,7 +114,7 @@
                 <{/foreach}>
             </table>
         </div>
-        <{$token_form}>
+        <{$token_form|default:''}>
     <{elseif $mode=="ng"}>
         <div class="alert alert-success">
             <h3><{$group_array.$groupid}><{$smarty.const._MA_TADUSERS_ALL_OK}></h3>

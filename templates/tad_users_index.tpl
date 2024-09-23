@@ -1,4 +1,4 @@
-<{$toolbar}>
+<{$toolbar|default:''}>
 <{include file="$xoops_rootpath/modules/tad_users/templates/op_`$now_op`.tpl"}>
 
 <script type="text/javascript">

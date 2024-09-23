@@ -27,7 +27,7 @@
                     <input type="text" name="pass" id="pass" class="form-control " title="<{$smarty.const._MA_TADUSERS_PASSWD_TIP}>" data-toggle="tooltip" data-bs-toggle="tooltip">
                 <{/if}>
             </td>
-            <td class="c"><{$XoopsFormSelectGroup}></td>
+            <td class="c"><{$XoopsFormSelectGroup|default:''}></td>
             <td class="c">
                 <textarea name="bio" id="bio" class="form-control" rows=4><{$user.bio}></textarea>
             </td>

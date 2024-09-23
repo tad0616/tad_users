@@ -1,6 +1,6 @@
 
-<a href="main.php?groupid=<{$groupid}>&key=<{$key}>&desc=<{$desc}>&sort=<{$col}>">
-<{$col_title}>
+<a href="main.php?groupid=<{$groupid|default:''}>&key=<{$key|default:''}>&desc=<{$desc|default:''}>&sort=<{$col|default:''}>">
+<{$col_title|default:''}>
 <{if $sort==$col}>
     <{if $desc=='desc'}>
         <i class="fa fa-caret-down" aria-hidden="true"></i>

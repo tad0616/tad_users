@@ -54,8 +54,8 @@
         </td>
         <td colspan=4>
             <{foreach from=$group_array key=groupid item=title name=group_array}>
-                <input type="checkbox" name="groups[]" id="group_<{$groupid}>" value="<{$groupid}>" <{if $groups && ($groupid|in_array:$groups|| $groupid==2)}>checked<{/if}>>
-                    <label for="group_<{$groupid}>"><{$title}></label>
+                <input type="checkbox" name="groups[]" id="group_<{$groupid|default:''}>" value="<{$groupid|default:''}>" <{if $groups && ($groupid|in_array:$groups|| $groupid==2)}>checked<{/if}>>
+                    <label for="group_<{$groupid|default:''}>"><{$title|default:''}></label>
             <{/foreach}>
         </td>
     </tr>
