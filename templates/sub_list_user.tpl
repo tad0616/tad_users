@@ -82,7 +82,7 @@
                         </td>
                         <td class="c n">
 
-                            <a href="main.php?op=edit_users&uid=<{$user.uid}>&g2p=<{$smarty.get.g2p}>" class="btn btn-warning btn-sm btn-xs" data-toggle="tooltip" data-bs-toggle="tooltip" data-html="true" data-bs-html="true" title="<{$user.groups}>"><{$smarty.const._MA_TADUSERS_EDIT}></a>
+                            <a href="main.php?op=edit_users&uid=<{$user.uid}>&g2p=<{$smarty.get.g2p|intval}>" class="btn btn-warning btn-sm btn-xs" data-toggle="tooltip" data-bs-toggle="tooltip" data-html="true" data-bs-html="true" title="<{$user.groups}>"><{$smarty.const._MA_TADUSERS_EDIT}></a>
                         </td>
                         <td class="c n editable" data-name="timezone_offset" data-type="text" data-pk="<{$user.uid}>" data-params="{op: 'update_value', uid:'<{$user.uid}>'}">
                             <{$user.timezone_offset}>

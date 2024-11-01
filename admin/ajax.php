@@ -23,8 +23,9 @@ function update_value($name, $value, $uid)
 {
     global $xoopsDB;
 
-    $sql = "update " . $xoopsDB->prefix("users") . " set `{$name}`='{$value}' where uid='$uid'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'UPDATE `' . $xoopsDB->prefix('users') . '` SET `' . $name . '`=? WHERE `uid`=?';
+    Utility::query($sql, 'si', [$value, $uid]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     return $value;
 
 }

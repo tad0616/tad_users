@@ -34,8 +34,8 @@
             <td class="c">
                 <input type="hidden" name="op" value="update_user">
                 <input type="hidden" name="uid" value="<{$user.uid}>">
-                <input type="hidden" name="g2p" value="<{$smarty.get.g2p}>">
-                <button type="submit" class="btn btn-primary"><{$smarty.const._TAD_SUBMIT}></button>
+                <input type="hidden" name="g2p" value="<{$smarty.get.g2p|intval}>">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i>  <{$smarty.const._TAD_SUBMIT}></button>
             </td>
         </tr>
     </table>

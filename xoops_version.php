@@ -25,11 +25,12 @@ $modversion['min_php'] = 5.4;
 $modversion['min_xoops'] = '2.5';
 
 //---paypal資訊---//
-$modversion['paypal'] = array();
-$modversion['paypal']['business'] = 'tad0616@gmail.com';
-$modversion['paypal']['item_name'] = 'Donation : ' . _MI_TAD_WEB;
-$modversion['paypal']['amount'] = 0;
-$modversion['paypal']['currency_code'] = 'USD';
+$modversion['paypal'] = [
+    'business' => 'tad0616@gmail.com',
+    'item_name' => 'Donation : ' . _MI_TAD_WEB,
+    'amount' => 0,
+    'currency_code' => 'USD',
+];
 
 //---啟動後台管理界面選單---//
 $modversion['system_menu'] = 1;
@@ -43,11 +44,7 @@ $modversion['adminmenu'] = "admin/menu.php";
 $modversion['hasMain'] = 0;
 
 //---樣板設定---//
-$modversion['templates'] = array();
-$i = 1;
-$modversion['templates'][$i]['file'] = 'tad_users_admin.tpl';
-$modversion['templates'][$i]['description'] = 'tad_users_admin.tpl';
-
-$i++;
-$modversion['templates'][$i]['file'] = 'tad_users_index.tpl';
-$modversion['templates'][$i]['description'] = 'tad_users_index.tpl';
+$modversion['templates'] = [
+    ['file' => 'tad_users_admin.tpl', 'description' => 'tad_users_admin.tpl'],
+    ['file' => 'tad_users_index.tpl', 'description' => 'tad_users_index.tpl'],
+];

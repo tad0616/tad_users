@@ -40,7 +40,7 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign("now_op", $op);
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/vtable.css');
+$xoTheme->addStylesheet('modules/tadtools/css/vtable.css');
 include_once 'footer.php';
 
 /*-----------function區--------------*/

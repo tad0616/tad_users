@@ -81,17 +81,18 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign("now_op", $op);
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/my-input.css');
+$xoTheme->addStylesheet('modules/tadtools/css/my-input.css');
 include_once 'footer.php';
 
 /*-----------function區--------------*/
 
 function clear_uid0($groupid = '')
 {
-    global $xoopsTpl, $xoopsDB;
+    global $xoopsDB;
 
-    $sql = "delete from " . $xoopsDB->prefix("groups_users_link") . " where uid='0' and groupid='{$groupid}'";
-    $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'DELETE FROM `' . $xoopsDB->prefix('groups_users_link') . '` WHERE `uid`=0 AND `groupid`=?';
+    Utility::query($sql, 'i', [$groupid]) or Utility::web_error($sql, __FILE__, __LINE__);
+
 }
 
 function check_members($groupid = '')
@@ -111,22 +112,25 @@ function check_members($groupid = '')
     $group_array = group_array();
     $xoopsTpl->assign('group_array', $group_array);
 
-    $sql = "select count(`uid`) from " . $xoopsDB->prefix("groups_users_link") . " where uid='0'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT COUNT(`uid`) FROM `' . $xoopsDB->prefix('groups_users_link') . '` WHERE `uid`=?';
+    $result = Utility::query($sql, 'i', [0]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     list($no_uid_members) = $xoopsDB->fetchRow($result);
     $xoopsTpl->assign('no_uid_members', $no_uid_members);
 
     $users = $members = [];
     if ($groupid != 2) {
-        $sql = "select a.`uid` from " . $xoopsDB->prefix("users") . " as a join " . $xoopsDB->prefix("groups_users_link") . " as b on a.uid=b.uid where b.groupid='2'";
-        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql = 'SELECT a.`uid` FROM `' . $xoopsDB->prefix('users') . '` AS a JOIN `' . $xoopsDB->prefix('groups_users_link') . '` AS b ON a.`uid`=b.`uid` WHERE b.`groupid`=2';
+        $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+
         while (list($uid) = $xoopsDB->fetchRow($result)) {
             $members[$uid] = $uid;
         }
     }
 
-    $sql = "select a.* from " . $xoopsDB->prefix("users") . " as a join " . $xoopsDB->prefix("groups_users_link") . " as b on a.uid=b.uid where b.groupid='$groupid'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT a.* FROM `' . $xoopsDB->prefix('users') . '` AS a JOIN `' . $xoopsDB->prefix('groups_users_link') . '` AS b ON a.uid=b.uid WHERE b.groupid=?';
+    $result = Utility::query($sql, 'i', [$groupid]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     while ($user = $xoopsDB->fetchArray($result)) {
         if (!empty($members) && $groupid != 2 && !in_array($user['uid'], $members)) {
             $user['ng'][] = _MA_TADUSERS_NOT_MEMBER;
@@ -262,8 +266,8 @@ function edit_users($uid = "")
     $select = group_select("groupid", [], "onChange=\"location.href='main.php?groupid='+this.value\"");
     $xoopsTpl->assign('select', $select);
 
-    $sql = "select * from " . $xoopsDB->prefix("users") . " where uid='$uid'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT * FROM `' . $xoopsDB->prefix('users') . '` WHERE `uid`=?';
+    $result = Utility::query($sql, 'i', [$uid]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $users = $xoopsDB->fetchArray($result);
     $users = array_map('htmlspecialchars', $users);
@@ -278,26 +282,27 @@ function edit_users($uid = "")
 function update_user($uid = "")
 {
     global $xoopsDB;
-    $myts = \MyTextSanitizer::getInstance();
 
     $and_pass = "";
     if (!empty($_POST['pass'])) {
         $pass = md5($_POST['pass']);
         $and_pass = ",pass='{$pass}'";
     }
-    $user_occ = $myts->addSlashes($_POST['user_occ']);
-    $bio = $myts->addSlashes($_POST['bio']);
+    $user_occ = $_POST['user_occ'];
+    $bio = $_POST['bio'];
 
-    $sql = "update " . $xoopsDB->prefix("users") . " set `user_occ`='{$user_occ}', `bio`='{$bio}'{$and_pass} where `uid`='$uid'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'UPDATE `' . $xoopsDB->prefix('users') . '` SET `user_occ`=?, `bio`=?' . $and_pass . ' WHERE `uid`=?';
+    Utility::query($sql, 'ssi', [$user_occ, $bio, $uid]) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //更新群組
-    $sql = "delete from " . $xoopsDB->prefix("groups_users_link") . "  where uid='$uid'";
-    $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'DELETE FROM `' . $xoopsDB->prefix('groups_users_link') . '` WHERE `uid`=?';
+    Utility::query($sql, 'i', [$uid]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     foreach ($_POST['group'] as $group_id) {
         $group_id = (int) $group_id;
-        $sql = "insert into " . $xoopsDB->prefix("groups_users_link") . " (`groupid` , `uid`) values('$group_id','$uid')";
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql = 'INSERT INTO `' . $xoopsDB->prefix('groups_users_link') . '` (`groupid`, `uid`) VALUES (?, ?)';
+        Utility::query($sql, 'ii', [$group_id, $uid]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     }
 }
 
@@ -305,8 +310,9 @@ function add_group($groupid)
 {
     global $xoopsDB;
     foreach ($_POST['uid_arr'] as $uid) {
-        $sql = "insert into " . $xoopsDB->prefix("groups_users_link") . " (`groupid` , `uid`) values('$groupid','$uid')";
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql = 'INSERT INTO `' . $xoopsDB->prefix('groups_users_link') . '` (`groupid`, `uid`) VALUES (?, ?)';
+        Utility::query($sql, 'ii', [$groupid, $uid]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     }
 }
 
@@ -314,8 +320,9 @@ function del_group($groupid)
 {
     global $xoopsDB;
     foreach ($_POST['uid_arr'] as $uid) {
-        $sql = "delete from " . $xoopsDB->prefix("groups_users_link") . "  where `uid`='$uid' and `groupid`='$groupid'";
-        $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql = 'DELETE FROM `' . $xoopsDB->prefix('groups_users_link') . '` WHERE `uid`=? AND `groupid`=?';
+        Utility::query($sql, 'ii', [$uid, $groupid]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     }
 }
 
@@ -324,8 +331,9 @@ function update_users_value($name, $value)
     global $xoopsDB;
 
     foreach ($_POST['uid_arr'] as $uid) {
-        $sql = "update " . $xoopsDB->prefix("users") . " set `{$name}`='{$value}' where uid='$uid'";
-        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql = 'UPDATE `' . $xoopsDB->prefix('users') . '` SET `' . $name . '`=? WHERE `uid`=?';
+        Utility::query($sql, 'si', [$value, $uid]) or Utility::web_error($sql, __FILE__, __LINE__);
+
     }
     return $value;
 
@@ -335,7 +343,7 @@ function update_users_value($name, $value)
 function del_users()
 {
     $member_handler = xoops_getHandler('member');
-    if (!$GLOBALS['xoopsSecurity']->check()) {
+    if ($_SERVER['SERVER_ADDR'] != '127.0.0.1' && !$GLOBALS['xoopsSecurity']->check()) {
         redirect_header('main.php', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
     }
 

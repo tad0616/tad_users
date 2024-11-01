@@ -5,9 +5,10 @@ function group_array()
 {
     global $xoopsDB;
     $groups = [];
-    $sql = "select groupid, name, group_type from " . $xoopsDB->prefix("groups");
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-    while (list($groupid, $name, $group_type) = $xoopsDB->fetchRow($result)) {
+    $sql = 'SELECT `groupid`, `name` FROM `' . $xoopsDB->prefix('groups') . '`';
+    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+
+    while (list($groupid, $name) = $xoopsDB->fetchRow($result)) {
         $groups[$groupid] = $name;
     }
     return $groups;
@@ -19,14 +20,15 @@ function group_select($select_name = "groupid", $value = array(), $js = "", $mod
     global $xoopsDB;
 
     $groupid_count = [];
-    $sql = "select groupid, count(groupid) from " . $xoopsDB->prefix("groups_users_link") . " group by `groupid`";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `groupid`, COUNT(`groupid`) FROM `' . $xoopsDB->prefix('groups_users_link') . '` GROUP BY `groupid`';
+    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+
     while (list($groupid, $count) = $xoopsDB->fetchRow($result)) {
         $groupid_count[$groupid] = (int) $count;
     }
 
-    $sql = "select groupid, name, group_type from " . $xoopsDB->prefix("groups");
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `groupid`, `name`, `group_type` FROM `' . $xoopsDB->prefix('groups') . '`';
+    $result = Utility::query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $option = "<option value=''></option>";
     while (list($groupid, $name, $group_type) = $xoopsDB->fetchRow($result)) {
@@ -38,7 +40,7 @@ function group_select($select_name = "groupid", $value = array(), $js = "", $mod
         $option .= "<option value='$groupid' $selected>{$name} ({$count})</option>";
     }
     $main = "
-    <select name='{$select_name}' class='form-control group_select' $js>
+    <select name='{$select_name}' class='form-select group_select' $js>
     $option
     </select>";
 
@@ -50,10 +52,9 @@ function id_existed($id = "")
 {
     global $xoopsDB;
 
-    $sql = "select uid from " . $xoopsDB->prefix("users") . " where uname='{$id}'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `uid` FROM `' . $xoopsDB->prefix('users') . '` WHERE `uname`=?';
+    $result = Utility::query($sql, 's', [$id]) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $option = "";
     while (list($uid) = $xoopsDB->fetchRow($result)) {
         if (!empty($uid)) {
             return $uid;
