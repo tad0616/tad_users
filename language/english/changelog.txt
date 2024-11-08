@@ -1,54 +1,59 @@
-Tad User 1.8 (released 2023-08-20)
+Tad User 2.0 (released on 2024-11-11)
+====================================
+1. Support XOOPS 2.5.11
+2. Support PHP8.1.x
+3. Database syntax parameterization
+
+Tad User 1.8 (released on 2023-08-20)
 ===========================================
-1. Add member checking function.
-2. Integrate the function of adding new accounts
-3. Add single account add function.
+1. Join the membership test function
+2. Integrate the new account function
+3. Add new functions for single account
 4. Optimize the interface
 
 Tad User 1.7 (released on 2023-01-29)
 ===========================================
-1. Fix the problem that "Join specified group" and "Remove specified group" cannot be used in batch
+1. Fixed the problem that batches of "Add designated group" and "Remove designated group" cannot be used.
 2. Add the function of deleting members
 
 Tad User 1.6 (released on 2022-08-13)
 ===========================================
-1. Add hours, minutes and seconds to last login time
-2. Change to backend only
-3. change new member in front
-4. Move group button position
-5. CSS to reduce the introduction of external style files
-6. Fix font
+1. Add hours, minutes and seconds to the last login time
+2. Change to background only
+3. Change to new members first
+4.Move the group button position
+5.CSS reduces the introduction of external style files
+6. Correct font
 7. Add sorting function
 8. Add batch modification function
 
-Tad User 1.5 (Released 2022-01-28)
+Tad User 1.5 (released on 2022-01-28)
 ===========================================
-1.Support BootStrap5
+1. Support BootStrap5
 
-Tad User 1.4 (Released 2021-09-29)
+Tad User 1.4 (released on 2021-09-29)
 ===========================================
-1. Fix the problem that users may repeatedly appear
-2. Add a blank item in the drop-down menu of group selection
+1. Fix the problem that users may have repeatedly
+2. Add a blank item to the drop-down menu of the selected group
 
-Tad User 1.3 (Released 2021-08-05)
+Tad User 1.3 (released on 2021-08-05)
 ===========================================
-1. Add the function to modify the user's layout
-2. Cancel frontend
+1. Add the function of modifying the scenery used by users
+2. Cancel the front desk
 
-Tad User 1.2 (Released 2020-12-16)
+Tad User 1.2 (released on 2020-12-16)
 ===========================================
-1. Modify OpenID password will automatically lead to tad login to modify
-2. Fix the problem that name, Email and other information will disappear after editing member group or password.
-3. Fix the problem that when editing member group or password, sometimes it will be directed to other pages.
+1. When modifying the OpenID password, you will automatically be directed to tad login to modify it.
+2. Fixed an issue where name, email and other information would disappear after editing member groups or passwords.
+3. Fixed the issue of sometimes being directed to other pages when editing member groups or passwords.
 
+Tad User 1.1 (released on 2020-09-09)
+===========================================
+1. Modify the presentation method
+2. Click directly to modify the information instead
 
-Tad User 1.1 (Released on 2020-09-09)
-=============================================================
-1. Modify the presentation
-2.Change to click to modify data directly
-
-Tad User 1.0 (Released on 2020-08-12)
-=============================================================
-1.Online Batch Generation of Member Accounts
-2. Member management function
+Tad User 1.0 (released on 2020-08-12)
+===========================================
+1. Generate member accounts in batches online
+2.Member management function
 3. Batch import account function
