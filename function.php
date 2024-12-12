@@ -40,7 +40,7 @@ function group_select($select_name = "groupid", $value = array(), $js = "", $mod
         $option .= "<option value='$groupid' $selected>{$name} ({$count})</option>";
     }
     $main = "
-    <select name='{$select_name}' class='form-select group_select' $js>
+    <select name='{$select_name}' class='form-control form-select group_select' $js>
     $option
     </select>";
 

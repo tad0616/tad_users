@@ -55,7 +55,7 @@
             <{$smarty.const._MA_TADUSERS_SET_GROUP}>
         </label>
         <div class="col-sm-9">
-            <select name="groups[]" multiple id="data_group" class="form-select validate[required]">
+            <select name="groups[]" multiple id="data_group" class="form-control form-select validate[required]">
                 <{foreach from=$group_array key=groupid item=title name=group_array}>
                     <option value="<{$groupid|default:''}>" <{if $user.group && ($groupid|in_array:$user.group|| $groupid==2)}>selected<{/if}>><{$title|default:''}></option>
                 <{/foreach}>

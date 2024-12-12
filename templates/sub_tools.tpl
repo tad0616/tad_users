@@ -2,7 +2,7 @@
     <div class="input-group-prepend input-group-addon">
         <span class="input-group-text"><{$smarty.const._MA_TADUSERS_CHECKMARK_MEMBER}></span>
     </div>
-    <select name="op1" id="op1" class="form-select validate[required]" placeholder="<{$smarty.const._MA_TADUSERS_SELECT_ACTION}>">
+    <select name="op1" id="op1" class="form-control form-select validate[required]" placeholder="<{$smarty.const._MA_TADUSERS_SELECT_ACTION}>">
         <option value=""></option>
         <option value="add_group"><{$smarty.const._MA_TADUSERS_JOIN_TO_GROUP}></option>
         <option value="del_group"><{$smarty.const._MA_TADUSERS_MOVE_OUT_GROUP}></option>

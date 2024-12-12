@@ -125,7 +125,7 @@
 
 <script type='text/javascript'>
     $().ready(function(){
-        $("#op1").change(function(){
+        $("#op1").on('change', function(){
             var op1 = $("#op1").val();
             if(op1 == 'add_group' || op1=='del_group'){
                 $('.group_select').show();

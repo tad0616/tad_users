@@ -288,8 +288,8 @@ function update_user($uid = "")
         $pass = md5($_POST['pass']);
         $and_pass = ",pass='{$pass}'";
     }
-    $user_occ = $_POST['user_occ'];
-    $bio = $_POST['bio'];
+    $user_occ = (string) $_POST['user_occ'];
+    $bio = (string) $_POST['bio'];
 
     $sql = 'UPDATE `' . $xoopsDB->prefix('users') . '` SET `user_occ`=?, `bio`=?' . $and_pass . ' WHERE `uid`=?';
     Utility::query($sql, 'ssi', [$user_occ, $bio, $uid]) or Utility::web_error($sql, __FILE__, __LINE__);
