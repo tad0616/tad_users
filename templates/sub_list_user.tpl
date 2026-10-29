@@ -26,19 +26,19 @@
                             <{include file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="email" col_title="Email"}>
                         </th>
                         <th class="c n"><{$smarty.const._TAD_FUNCTION}></th>
-                        <th class="c n" data-hide="phone">
+                        <th class="c n" data-hide="phone,tablet">
                             <{include file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="timezone_offset" col_title=$smarty.const._MA_TADUSERS_TIMEZONE}>
                         </th>
                         <th class="c n" data-hide="phone,tablet">
                             <{include file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="theme" col_title=$smarty.const._MA_TADUSERS_THEME}>
                         </th>
-                        <th class="c n" data-hide="phone,tablet">
+                        <th class="c n" data-hide="expand">
                             <{include file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="last_login" col_title=$smarty.const._MA_TADUSERS_LASTLOGIN}>
                         </th>
                         <th class="c n" data-hide="phone,tablet" data-toggle="tooltip" data-bs-toggle="tooltip" title="<{$smarty.const._MA_TADUSERS_ICQ}>">
                             <{include file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="user_icq" col_title="icq"}>
                         </th>
-                        <th class="c n" data-hide="phone" data-toggle="tooltip" data-bs-toggle="tooltip" title="<{$smarty.const._MA_TADUSERS_OCC}>">
+                        <th class="c n" data-hide="phone,tablet" data-toggle="tooltip" data-bs-toggle="tooltip" title="<{$smarty.const._MA_TADUSERS_OCC}>">
                             <{include file="$xoops_rootpath/modules/tad_users/templates/sub_col_title.tpl" col="user_occ" col_title="occ"}>
                         </th>
                         <th class="c n" data-hide="phone" data-toggle="tooltip" data-bs-toggle="tooltip" title="<{$smarty.const._MA_TADUSERS_INTREST}>">

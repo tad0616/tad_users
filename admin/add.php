@@ -79,7 +79,7 @@ function import_check($groups = [], $intrest = '')
         //讀取一列中的每一格
         for ($col = 0; $col < $highestColumn; $col++) {
             $cell = $sheet->getCellByColumnAndRow($col, $row);
-            $val = $myts->addSlashes(get_value_of_cell($cell));
+            $val = addslashes(get_value_of_cell($cell));
             $users[$row][$col] = $val;
             if ($col == 0) {
                 if (empty($val) or $val == "Account" or $val == "帳號") {
