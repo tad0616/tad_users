@@ -191,9 +191,12 @@ function arrayToUl($array, $show_key = true)
 
 function list_users($groupid = "", $key = "")
 {
-    global $xoopsTpl;
+    global $xoopsTpl, $xoTheme;
 
     BootstrapTable::render();
+    if (is_object($xoTheme)) {
+        $xoTheme->addStylesheet('modules/tadtools/css/fontawesome6/css/all.min.css');
+    }
 
     $xoopsTpl->assign('groupid', $groupid);
     $xoopsTpl->assign('key', $key);

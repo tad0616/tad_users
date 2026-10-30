@@ -1,7 +1,8 @@
 <h1 class="my"><{$smarty.const._MA_TADUSERS_CHKID}></h1>
 
 <form action="add.php" method="post">
-	<table class="table  table-bordered table-hover">
+	<div class="table-responsive">
+	<table class="table  table-bordered table-hover align-middle">
     <tr class="bg-info white">
         <th><{$smarty.const._MA_TADUSERS_ID}></th>
         <th><{$smarty.const._MA_TADUSERS_NAME}></th>
@@ -60,8 +61,9 @@
         </td>
     </tr>
     </table>
+    </div>
 
-    <div class="bar">
+    <div class="bar mt-3">
         <button type="submit" class="btn btn-primary" name="op" value="add_user"><{$smarty.const._MA_TADUSERS_ADD_USER}></button>
     </div>
 </form>

@@ -19,6 +19,18 @@
     $(function(){
         $("#users_table").bootstrapTable({
             queryParams: window.usersQueryParams,
+            iconsPrefix: 'fa-solid',
+            icons: {
+                search: 'fa-magnifying-glass',
+                clearSearch: 'fa-xmark',
+                refresh: 'fa-rotate',
+                toggleOn: 'fa-toggle-on',
+                toggleOff: 'fa-toggle-off',
+                columns: 'fa-table-columns',
+                fullscreen: 'fa-expand',
+                detailOpen: 'fa-plus',
+                detailClose: 'fa-minus'
+            },
             onPostBody: window.usersPostBody
         });
     });

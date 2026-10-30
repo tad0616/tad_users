@@ -3,7 +3,8 @@
 
 	<p><b><{$smarty.const._MA_TADUSERS_COPY|sprintf:"csv.php?f=$file_name"}></b></p>
 
-	<table class="table table-bordered table-hover">
+	<div class="table-responsive">
+	<table class="table table-bordered table-hover align-middle">
 	    <tr>
             <th><{$smarty.const._MA_TADUSERS_ID}></th>
             <th><{$smarty.const._MA_TADUSERS_NAME}></th>
@@ -64,8 +65,9 @@
         </td>
     </tr>
     </table>
+    </div>
 
-    <div class="bar">
+    <div class="bar mt-3">
         <button type="submit" type="hidden" name="op" value="add_user" class="btn btn-primary"><{$smarty.const._MA_TADUSERS_ADD_USER}></button>
     </div>
 </form>

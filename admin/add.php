@@ -8,9 +8,9 @@ include_once "header.php";
 include_once "../function.php";
 
 /*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$data = Request::getArray('data');
-$groups = Request::getArray('groups');
+$op      = Request::getString('op');
+$data    = Request::getArray('data');
+$groups  = Request::getArray('groups');
 $intrest = Request::getString('intrest');
 
 switch ($op) {
@@ -27,7 +27,7 @@ switch ($op) {
         break;
 
     case "add_user":
-        $msg = add_user($data, $groups);
+        $msg        = add_user($data, $groups);
         $result_msg = adduser_msg($msg);
         redirect_header($_SERVER['PHP_SELF'], 10, $result_msg);
         break;
@@ -40,7 +40,6 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign("now_op", $op);
-$xoTheme->addStylesheet('modules/tadtools/css/vtable.css');
 include_once 'footer.php';
 
 /*-----------function區--------------*/
@@ -60,26 +59,26 @@ function import_check($groups = [], $intrest = '')
     $xoopsTpl->assign('intrest', $intrest);
 
     require XOOPS_ROOT_PATH . '/modules/tadtools/vendor/phpoffice/phpexcel/Classes/PHPExcel/IOFactory.php';
-    $reader = \PHPExcel_IOFactory::createReader('Excel2007');
+    $reader   = \PHPExcel_IOFactory::createReader('Excel2007');
     $PHPExcel = $reader->load($_FILES['userfile']['tmp_name']); // 檔案名稱
 
-    $sheet = $PHPExcel->getSheet(0); // 讀取第一個工作表(編號從 0 開始)
-    $highestRow = $sheet->getHighestRow(); // 取得總列數
-    $colString = $sheet->getHighestDataColumn();
+    $sheet         = $PHPExcel->getSheet(0);  // 讀取第一個工作表(編號從 0 開始)
+    $highestRow    = $sheet->getHighestRow(); // 取得總列數
+    $colString     = $sheet->getHighestDataColumn();
     $highestColumn = \PHPExcel_Cell::columnIndexFromString($colString);
 
     $cell = $sheet->getCellByColumnAndRow(0, 1);
-    $val = get_value_of_cell($cell);
+    $val  = get_value_of_cell($cell);
 
     preg_match_all('/\d+/', $val, $matches, PREG_OFFSET_CAPTURE);
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts  = MyTextSanitizer::getInstance();
     $users = [];
     for ($row = 1; $row <= $highestRow; $row++) {
         //讀取一列中的每一格
         for ($col = 0; $col < $highestColumn; $col++) {
-            $cell = $sheet->getCellByColumnAndRow($col, $row);
-            $val = addslashes(get_value_of_cell($cell));
+            $cell              = $sheet->getCellByColumnAndRow($col, $row);
+            $val               = addslashes(get_value_of_cell($cell));
             $users[$row][$col] = $val;
             if ($col == 0) {
                 if (empty($val) or $val == "Account" or $val == "帳號") {
@@ -87,7 +86,7 @@ function import_check($groups = [], $intrest = '')
                     continue 2;
                 }
 
-                $users[$row]['uname'] = $val;
+                $users[$row]['uname']      = $val;
                 $users[$row]['id_existed'] = id_existed($val);
             } elseif ($col == 1) {
                 $users[$row]['name'] = $val;
@@ -141,8 +140,8 @@ function check_set($data = [], $groups = [], $intrest = '')
     $xoopsTpl->assign('groups', $groups);
     $xoopsTpl->assign('intrest', $intrest);
 
-    $j = $data['id_start'];
-    $csv = "";
+    $j         = $data['id_start'];
+    $csv       = "";
     $file_name = session_id() . date("YmdHis");
     $xoopsTpl->assign('file_name', $file_name);
 
@@ -156,7 +155,7 @@ function check_set($data = [], $groups = [], $intrest = '')
 
         //密碼
         if ($data['pass_mode'] == "random") {
-            $n = rand(0, (32 - $data['pass_num']));
+            $n             = rand(0, (32 - $data['pass_num']));
             $acc['passwd'] = substr(md5(rand(0, 1000000)), $n, $data['pass_num']);
         } elseif ($data['pass_mode'] == "same_as_id") {
             $acc['passwd'] = $id;
