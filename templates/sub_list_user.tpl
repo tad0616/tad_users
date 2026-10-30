@@ -1,6 +1,71 @@
+<script type='text/javascript'>
+    var usersGroupId = "<{$groupid|default:''|escape:'javascript'}>";
+
+    window.usersQueryParams = function(params) {
+        params.groupid = usersGroupId;
+        return params;
+    };
+
+    window.usersPostBody = function() {
+        $("#clickAll").prop("checked", false);
+        $("#users_table [data-bs-toggle='tooltip']").each(function() {
+            if (window.bootstrap && bootstrap.Tooltip) {
+                new bootstrap.Tooltip(this, {html: true});
+            } else if ($.fn.tooltip) {
+                $(this).tooltip({html: true});
+            }
+        });
+    };
+    $(function(){
+        $("#users_table").bootstrapTable({
+            queryParams: window.usersQueryParams,
+            onPostBody: window.usersPostBody
+        });
+    });
+</script>
 <form action="main.php" method="post" id="myForm" class="myForm">
     <{include file="$xoops_rootpath/modules/tad_users/templates/sub_search_bar.tpl"}>
-    <{if $users|default:false}>
+    <{if $mode|default:'' != 'ng'}>
+        <div class="table-responsive">
+            <table id="users_table"
+                class="table table-hover table-striped"
+                data-toggle="table-js"
+                data-url="<{$xoops_url}>/modules/tad_users/admin/ajax.php?op=list_users"
+                data-side-pagination="server"
+                data-pagination="true"
+                data-page-size="20"
+                data-page-list="[20, 50, 100]"
+                data-sort-name="uid"
+                data-sort-order="desc"
+                data-search="true"
+                data-search-text="<{$key|default:''|escape}>"
+                data-show-search-clear-button="true"
+                data-mobile-responsive="true"
+                data-id-field="uid"
+                data-editable-url="<{$xoops_url}>/modules/tad_users/admin/ajax.php"
+                data-editable-params="{op:'update_value'}">
+                <thead>
+                    <tr>
+                        <th class="c n" data-field="del"><{$smarty.const._MA_TADUSERS_DEL}></th>
+                        <th class="c n" data-field="chk"><input type="checkbox" id="clickAll"></th>
+                        <th class="c n" data-field="uid" data-sortable="true">uid</th>
+                        <th class="c n" data-field="name" data-sortable="true" data-editable="true"><{$smarty.const._MA_TADUSERS_NAME}></th>
+                        <th class="c n" data-field="uname" data-sortable="true"><{$smarty.const._MA_TADUSERS_UNAME}></th>
+                        <th class="c n" data-field="email" data-sortable="true" data-editable="true">Email</th>
+                        <th class="c n" data-field="func"><{$smarty.const._TAD_FUNCTION}></th>
+                        <th class="c n" data-field="timezone_offset" data-sortable="true" data-editable="true"><{$smarty.const._MA_TADUSERS_TIMEZONE}></th>
+                        <th class="c n" data-field="theme" data-sortable="true" data-editable="true"><{$smarty.const._MA_TADUSERS_THEME}></th>
+                        <th class="c n" data-field="last_login" data-sortable="true"><{$smarty.const._MA_TADUSERS_LASTLOGIN}></th>
+                        <th class="c n" data-field="user_icq" data-sortable="true" data-editable="true" title="<{$smarty.const._MA_TADUSERS_ICQ}>">icq</th>
+                        <th class="c n" data-field="user_occ" data-sortable="true" data-editable="true" title="<{$smarty.const._MA_TADUSERS_OCC}>">occ</th>
+                        <th class="c n" data-field="user_intrest" data-sortable="true" data-editable="true" title="<{$smarty.const._MA_TADUSERS_INTREST}>">intrest</th>
+                        <th class="c n" data-field="bio" data-sortable="true" style="min-width: 300px;" title="<{$smarty.const._MA_TADUSERS_BIO}>">bio</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <{$token_form|default:''}>
+    <{elseif $users|default:false}>
         <div class="table-responsive">
             <table id="users_table"
                 class="table table-hover table-striped"
@@ -99,18 +164,11 @@
             }
         });
 
-        $("#clickAll").click(function() {
-            var x = document.getElementById("clickAll").checked;
-            if(x){
-                $(".uid").each(function() {
-                    $(this).attr("checked", true);
-                });
-            }else{
-                $(".uid").each(function() {
-                        $(this).attr("checked", false);
-                });
-            }
+        $(document).on("click", "#clickAll", function() {
+            $(".uid").prop("checked", this.checked);
         });
 
     });
+
+    var usersGroupId = "<{$groupid|default:''|escape:'javascript'}>";
 </script>

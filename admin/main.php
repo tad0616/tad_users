@@ -191,32 +191,12 @@ function arrayToUl($array, $show_key = true)
 
 function list_users($groupid = "", $key = "")
 {
-    global $xoopsDB, $xoopsTpl;
+    global $xoopsTpl;
 
     BootstrapTable::render();
 
     $xoopsTpl->assign('groupid', $groupid);
     $xoopsTpl->assign('key', $key);
-
-    $params = [];
-    $types = '';
-    $and_key = '';
-    if ($key !== '') {
-        $like = '%' . $key . '%';
-        $and_key = ' AND (a.`name` LIKE ? OR a.`uname` LIKE ? OR a.`email` LIKE ? OR a.`user_occ` LIKE ? OR a.`bio` LIKE ? OR a.`user_intrest` LIKE ?)';
-        $params = array_fill(0, 6, $like);
-        $types = 'ssssss';
-    }
-
-    if (empty($groupid)) {
-        $sql = 'SELECT a.* FROM `' . $xoopsDB->prefix('users') . '` AS a WHERE 1' . $and_key . ' ORDER BY a.`uid` DESC';
-    } else {
-        $sql = 'SELECT a.* FROM `' . $xoopsDB->prefix('users') . '` AS a JOIN `' . $xoopsDB->prefix('groups_users_link') . '` AS b ON a.`uid`=b.`uid` WHERE b.`groupid`=?' . $and_key . ' GROUP BY a.`uid` ORDER BY a.`uid` DESC';
-        array_unshift($params, $groupid);
-        $types = 'i' . $types;
-    }
-
-    $result = Utility::query($sql, $types, $params) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $select = group_select("groupid", array($groupid), "onChange=\"location.href='main.php?groupid='+this.value\"");
     $xoopsTpl->assign('select', $select);
@@ -226,21 +206,6 @@ function list_users($groupid = "", $key = "")
 
     $group_array = group_array();
     $xoopsTpl->assign('group_array', $group_array);
-    $users = [];
-    while ($user = $xoopsDB->fetchArray($result)) {
-        foreach ($user as $k => $v) {
-            $$k = $v;
-        }
-        $user['groups'] = user_groups($uid, $group_array);
-        $user['bio_list'] = user_bio($bio);
-        $user['user_regdate'] = date("Y/m/d", $user_regdate);
-        $user['last_login'] = empty($last_login) ? "" : date("Y/m/d H:i:s", $last_login);
-        foreach (['name', 'uname', 'email', 'timezone_offset', 'theme', 'user_icq', 'user_occ', 'user_intrest', 'bio'] as $col) {
-            $user[$col] = htmlspecialchars((string) $user[$col], ENT_QUOTES);
-        }
-        $users[] = $user;
-    }
-    $xoopsTpl->assign('users', $users);
     //加入Token安全機制
     include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
     $token = new \XoopsFormHiddenToken();
