@@ -14,19 +14,19 @@ $groups = Request::getArray('groups');
 $intrest = Request::getString('intrest');
 
 switch ($op) {
-    case "check_set";
+    case "check_set":
         check_set($data, $groups, $intrest);
         break;
 
-    case "check_user";
+    case "check_user":
         check_user($data, $groups, $intrest);
         break;
 
-    case "import_check";
+    case "import_check":
         import_check($groups, $intrest);
         break;
 
-    case "add_user";
+    case "add_user":
         $msg = add_user($data, $groups);
         $result_msg = adduser_msg($msg);
         redirect_header($_SERVER['PHP_SELF'], 10, $result_msg);

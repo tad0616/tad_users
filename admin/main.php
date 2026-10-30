@@ -1,8 +1,7 @@
 <?php
 
 use Xmf\Request;
-use XoopsModules\Tadtools\Bootstrap3Editable;
-use XoopsModules\Tadtools\FooTable;
+use XoopsModules\Tadtools\BootstrapTable;
 use XoopsModules\Tadtools\FormValidator;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
@@ -19,8 +18,6 @@ $g2p = Request::getInt('g2p', 1);
 $groupid = Request::getInt('groupid');
 $act_groupid = Request::getInt('act_groupid');
 $key = Request::getString('key');
-$sort = Request::getString('sort', 'uid');
-$desc = Request::getString('desc');
 $val = Request::getString('val');
 
 if (!empty($op1)) {
@@ -74,7 +71,7 @@ switch ($op) {
         exit;
 
     default:
-        list_users($groupid, $key, $sort, $desc);
+        list_users($groupid, $key);
         $op = 'list_users';
         break;
 }
@@ -99,11 +96,7 @@ function check_members($groupid = '')
 {
     global $xoopsTpl, $xoopsDB, $xoopsConfig;
 
-    $Bootstrap3Editable = new Bootstrap3Editable();
-    $Bootstrap3EditableCode = $Bootstrap3Editable->render('.editable', XOOPS_URL . '/modules/tad_users/admin/ajax.php');
-    $xoopsTpl->assign('Bootstrap3EditableCode', $Bootstrap3EditableCode);
-    $FooTable = new FooTable('.footable');
-    $FooTable->render();
+    BootstrapTable::render();
     $group_select = group_select("act_groupid");
     $xoopsTpl->assign('group_select', $group_select);
     $xoopsTpl->assign('groupid', $groupid);
@@ -147,6 +140,9 @@ function check_members($groupid = '')
 
             $user['groups'] = user_groups($user['uid'], $group_array);
             $user['bio_list'] = user_bio($user['bio']);
+            foreach (['name', 'uname', 'email', 'timezone_offset', 'theme', 'user_icq', 'user_occ', 'user_intrest', 'bio'] as $col) {
+                $user[$col] = htmlspecialchars((string) $user[$col], ENT_QUOTES);
+            }
             $users[] = $user;
         }
 
@@ -193,39 +189,34 @@ function arrayToUl($array, $show_key = true)
     return $html;
 }
 
-function list_users($groupid = "", $key = "", $sort = 'uid', $desc = 'desc')
+function list_users($groupid = "", $key = "")
 {
     global $xoopsDB, $xoopsTpl;
 
-    $Bootstrap3Editable = new Bootstrap3Editable();
-    $Bootstrap3EditableCode = $Bootstrap3Editable->render('.editable', XOOPS_URL . '/modules/tad_users/admin/ajax.php');
-    $xoopsTpl->assign('Bootstrap3EditableCode', $Bootstrap3EditableCode);
-    $FooTable = new FooTable('.footable');
-    $FooTable->render();
+    BootstrapTable::render();
 
     $xoopsTpl->assign('groupid', $groupid);
     $xoopsTpl->assign('key', $key);
-    $desc = $desc == 'desc' ? '' : 'desc';
-    $xoopsTpl->assign('desc', $desc);
-    $xoopsTpl->assign('sort', $sort);
 
-    $and_key = empty($key) ? '' : "and (a.name like '%$key%' or a.uname like '%$key%' or a.email like '%$key%' or a.user_occ like '%$key%' or a.bio like '%$key%' or a.user_intrest like '%$key%')";
-    if (empty($groupid)) {
-        $sql = "select a.* from " . $xoopsDB->prefix("users") . " as a where 1 $and_key order by `$sort` $desc";
-    } else {
-        $sql = "select a.* from " . $xoopsDB->prefix("users") . " as a join " . $xoopsDB->prefix("groups_users_link") . " as b on a.uid=b.uid where b.groupid='$groupid' $and_key group by a.`uid` order by a.`$sort` $desc";
+    $params = [];
+    $types = '';
+    $and_key = '';
+    if ($key !== '') {
+        $like = '%' . $key . '%';
+        $and_key = ' AND (a.`name` LIKE ? OR a.`uname` LIKE ? OR a.`email` LIKE ? OR a.`user_occ` LIKE ? OR a.`bio` LIKE ? OR a.`user_intrest` LIKE ?)';
+        $params = array_fill(0, 6, $like);
+        $types = 'ssssss';
     }
 
-    //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
-    $PageBar = Utility::getPageBar($sql, 20, 10);
-    $bar = $PageBar['bar'];
-    $sql = $PageBar['sql'];
-    $total = $PageBar['total'];
+    if (empty($groupid)) {
+        $sql = 'SELECT a.* FROM `' . $xoopsDB->prefix('users') . '` AS a WHERE 1' . $and_key . ' ORDER BY a.`uid` DESC';
+    } else {
+        $sql = 'SELECT a.* FROM `' . $xoopsDB->prefix('users') . '` AS a JOIN `' . $xoopsDB->prefix('groups_users_link') . '` AS b ON a.`uid`=b.`uid` WHERE b.`groupid`=?' . $and_key . ' GROUP BY a.`uid` ORDER BY a.`uid` DESC';
+        array_unshift($params, $groupid);
+        $types = 'i' . $types;
+    }
 
-    $xoopsTpl->assign('bar', $bar);
-    $xoopsTpl->assign('total', $total);
-
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $result = Utility::query($sql, $types, $params) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $select = group_select("groupid", array($groupid), "onChange=\"location.href='main.php?groupid='+this.value\"");
     $xoopsTpl->assign('select', $select);
@@ -244,6 +235,9 @@ function list_users($groupid = "", $key = "", $sort = 'uid', $desc = 'desc')
         $user['bio_list'] = user_bio($bio);
         $user['user_regdate'] = date("Y/m/d", $user_regdate);
         $user['last_login'] = empty($last_login) ? "" : date("Y/m/d H:i:s", $last_login);
+        foreach (['name', 'uname', 'email', 'timezone_offset', 'theme', 'user_icq', 'user_occ', 'user_intrest', 'bio'] as $col) {
+            $user[$col] = htmlspecialchars((string) $user[$col], ENT_QUOTES);
+        }
         $users[] = $user;
     }
     $xoopsTpl->assign('users', $users);
@@ -309,6 +303,12 @@ function update_user($uid = "")
 function add_group($groupid)
 {
     global $xoopsDB;
+
+    if (!$GLOBALS['xoopsSecurity']->check()) {
+        redirect_header('main.php', 3, implode('<br>', $GLOBALS['xoopsSecurity']->getErrors()));
+        return;
+    }
+
     foreach ($_POST['uid_arr'] as $uid) {
         $sql = 'INSERT INTO `' . $xoopsDB->prefix('groups_users_link') . '` (`groupid`, `uid`) VALUES (?, ?)';
         Utility::query($sql, 'ii', [$groupid, $uid]) or Utility::web_error($sql, __FILE__, __LINE__);
