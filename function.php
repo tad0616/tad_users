@@ -73,10 +73,15 @@ function add_user($data = [], $groups = [])
     $_SERVER['REQUEST_METHOD'] = 'POST';
 
     $member_handler = xoops_gethandler('member');
+    $msg = ['ok' => [], 'err' => [], 'g_err' => []];
 
     foreach ($data as $i => $mem) {
+        if (!is_array($mem) || (empty($mem['uname']) && empty($mem['id']))) {
+            continue;
+        }
 
         $uname = (empty($mem['uname'])) ? $mem['id'] : $mem['uname'];
+        $mem['id'] = $uname;
         $name = (empty($mem['name'])) ? $mem['id'] : $mem['name'];
         $email = (empty($mem['email'])) ? "{$uname}@{$_SERVER['HTTP_HOST']}" : $mem['email'];
         $intrest = (empty($mem['intrest'])) ? '' : $mem['intrest'];
@@ -95,7 +100,7 @@ function add_user($data = [], $groups = [])
         $newuser->setVar('level', 1);
         $newuser->setVar('theme', $xoopsConfig['theme_set']);
         $newuser->setVar('timezone_offset', $xoopsConfig['default_TZ']);
-        $newuser->setVar('intrest', $intrest);
+        $newuser->setVar('user_intrest', $intrest);
 
         if (!$member_handler->insertUser($newuser, true)) {
             $msg['err'][] = "{$mem['id']}";

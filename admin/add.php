@@ -27,6 +27,12 @@ switch ($op) {
         break;
 
     case "add_user":
+        // 大量建立/匯入時,帳號資料以單一欄位傳送,避免超過 max_input_vars 而被截斷
+        $accounts_payload = Request::getString('accounts_payload');
+        if ($accounts_payload !== '') {
+            $decoded = json_decode((string) base64_decode($accounts_payload, true), true);
+            $data    = is_array($decoded) ? $decoded : [];
+        }
         $msg        = add_user($data, $groups);
         $result_msg = adduser_msg($msg);
         redirect_header($_SERVER['PHP_SELF'], 10, $result_msg);
@@ -100,6 +106,21 @@ function import_check($groups = [], $intrest = '')
 
     $xoopsTpl->assign('users', $users);
 
+    // 要新增的帳號打包成單一欄位
+    $add_list = [];
+    foreach ($users as $user) {
+        if ($user['id_existed']) {
+            continue;
+        }
+        $add_list[] = [
+            'uname'   => $user['uname'],
+            'name'    => $user['name'] ?? '',
+            'email'   => $user['email'] ?? '',
+            'passwd'  => $user['passwd'] ?? '',
+            'intrest' => $intrest,
+        ];
+    }
+    $xoopsTpl->assign('accounts_payload', base64_encode(json_encode($add_list, JSON_UNESCAPED_UNICODE)));
 }
 
 //針對excel各種數據類型
@@ -146,6 +167,7 @@ function check_set($data = [], $groups = [], $intrest = '')
     $xoopsTpl->assign('file_name', $file_name);
 
     $accounts = [];
+    $add_list = [];
     for ($i = 0; $i < $data['user_num']; $i++) {
 
         //帳號
@@ -170,6 +192,13 @@ function check_set($data = [], $groups = [], $intrest = '')
         $passwd = $acc['passwd'];
         if (!$acc['id_existed']) {
             $csv .= "{$id},{$passwd}\n";
+            $add_list[] = [
+                'id'      => $acc['id'],
+                'name'    => $acc['name'],
+                'email'   => $acc['email'],
+                'passwd'  => $acc['passwd'],
+                'intrest' => $intrest,
+            ];
         }
         $accounts[$j] = $acc;
         $j++;
@@ -181,6 +210,8 @@ function check_set($data = [], $groups = [], $intrest = '')
     fclose($fp);
     $xoopsTpl->assign('accounts', $accounts);
     $xoopsTpl->assign('data', $data);
+    // 要新增的帳號打包成單一欄位
+    $xoopsTpl->assign('accounts_payload', base64_encode(json_encode($add_list, JSON_UNESCAPED_UNICODE)));
 
 }
 

@@ -4,7 +4,7 @@ $modversion = [];
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADUSERS_NAME;
 // $modversion['version'] = 1.8;
-$modversion['version']     = $_SESSION['xoops_version'] >= 20511 ? '2.1.0-Stable' : '2.1';
+$modversion['version']     = $_SESSION['xoops_version'] >= 20511 ? '2.2.0-Stable' : '2.2';
 $modversion['description'] = _MI_TADUSERS_DESC;
 $modversion['author']      = _MI_TADUSERS_AUTHOR;
 $modversion['credits']     = _MI_TADUSERS_CREDITS;

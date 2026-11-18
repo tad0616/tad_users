@@ -1,5 +1,7 @@
 <h1 class="my"><{$smarty.const._MA_TADUSERS_CHKID}></h1>
 <form action="add.php" method="post">
+    <input type="hidden" name="op" value="add_user">
+    <input type="hidden" name="accounts_payload" value="<{$accounts_payload|default:''|escape}>">
 
 	<p><b><{$smarty.const._MA_TADUSERS_COPY|sprintf:"csv.php?f=$file_name"}></b></p>
 
@@ -28,24 +30,18 @@
             <tr>
                 <td>
                     <{$acc.id}>
-                    <input type="hidden" name="data[<{$i|default:''}>][id]" value="<{$acc.id}>">
                 </td>
                 <td>
                     <{$acc.name}>
-                    <input type="hidden" name="data[<{$i|default:''}>][name]" value="<{$acc.name}>">
                 </td>
                 <td>
                     <{$acc.email}>
-                    <input type="hidden" name="data[<{$i|default:''}>][email]" value="<{$acc.email}>">
                 </td>
                 <td>
                     <{$acc.passwd}>
-                    <input type="hidden" name="data[<{$i|default:''}>][passwd]" value="<{$acc.passwd}>">
-                    <input type="hidden" name="data[<{$i|default:''}>][from]" value="our_member">
                 </td>
                 <td>
                     <{$intrest|default:''}>
-                    <input type="hidden" name="data[<{$i|default:''}>][intrest]" value="<{$intrest|default:''}>">
                 </td>
                 <td>OK</td>
             </tr>

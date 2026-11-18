@@ -1,6 +1,8 @@
 <h1 class="my"><{$smarty.const._MA_TADUSERS_CHKID}></h1>
 
 <form action="add.php" method="post">
+    <input type="hidden" name="op" value="add_user">
+    <input type="hidden" name="accounts_payload" value="<{$accounts_payload|default:''|escape}>">
 	<div class="table-responsive">
 	<table class="table  table-bordered table-hover align-middle">
     <tr class="bg-info white">
@@ -26,23 +28,18 @@
             <tr class="bg-white">
                 <td>
                     <{$user.uname}>
-                    <input type="hidden" name="data[<{$i|default:''}>][uname]" value="<{$user.uname}>">
                 </td>
                 <td>
                     <{$user.name}>
-                    <input type="hidden" name="data[<{$i|default:''}>][name]" value="<{$user.name}>">
                 </td>
                 <td>
                     <{$user.email}>
-                    <input type="hidden" name="data[<{$i|default:''}>][email]" value="<{$user.email}>">
                 </td>
                 <td>
                     <{$user.passwd}>
-                    <input type="hidden" name="data[<{$i|default:''}>][passwd]" value="<{$user.passwd}>">
                 </td>
                 <td>
                     <{$intrest|default:''}>
-                    <input type="hidden" name="data[<{$i|default:''}>][intrest]" value="<{$intrest|default:''}>">
                 </td>
                 <td>OK</td>
             </tr>
