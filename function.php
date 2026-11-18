@@ -79,6 +79,10 @@ function add_user($data = [], $groups = [])
         if (!is_array($mem) || (empty($mem['uname']) && empty($mem['id']))) {
             continue;
         }
+        // 只接受純量字串欄位
+        foreach (['uname', 'id', 'name', 'email', 'passwd', 'intrest'] as $key) {
+            $mem[$key] = (isset($mem[$key]) && is_scalar($mem[$key])) ? trim((string) $mem[$key]) : '';
+        }
 
         $uname = (empty($mem['uname'])) ? $mem['id'] : $mem['uname'];
         $mem['id'] = $uname;
@@ -130,13 +134,13 @@ function adduser_msg($msg = array())
 {
     $text = _MA_TADUSERS_RESULT;
     foreach ($msg['err'] as $mem) {
-        $text .= "<div style='color:red;font-weight:bolder'>{$mem} " . _MA_TADUSERS_ADDID_ERROR . "</div>";
+        $text .= "<div style='color:red;font-weight:bolder'>" . htmlspecialchars((string) $mem, ENT_QUOTES, 'UTF-8') . " " . _MA_TADUSERS_ADDID_ERROR . "</div>";
     }
     foreach ($msg['ok'] as $mem) {
-        $text .= "<div style='color:black;font-weight:normal'>{$mem} " . _MA_TADUSERS_ADDID_OK . "</div>";
+        $text .= "<div style='color:black;font-weight:normal'>" . htmlspecialchars((string) $mem, ENT_QUOTES, 'UTF-8') . " " . _MA_TADUSERS_ADDID_OK . "</div>";
     }
     foreach ($msg['g_err'] as $mem) {
-        $text .= "<div style='color:red;font-weight:bolder'>{$mem} " . _MA_TADUSERS_ADDGROUP_ERROR . "</div>";
+        $text .= "<div style='color:red;font-weight:bolder'>" . htmlspecialchars((string) $mem, ENT_QUOTES, 'UTF-8') . " " . _MA_TADUSERS_ADDGROUP_ERROR . "</div>";
     }
     return $text;
 }
